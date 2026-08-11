@@ -77,7 +77,7 @@
                     <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 via-indigo-200 to-amber-300 bg-clip-text text-transparent">
                         מסלול ניו יורק 2026
                     </h1>
-                    <p class="text-xs text-slate-400">25.08.2026 - 30.08.2026 | נקודת מוצא: Hotel Riu Plaza NY Times Square</p>
+                    <p class="text-xs text-slate-400">25.08.2026 - 30.08.2026 | נקודת מוצא: The Pearl Hotel (233 W 49th St)</p>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@
                         <span class="text-xs text-blue-400 font-semibold">יום שלישי</span>
                         <span class="text-[10px] bg-blue-900/80 text-blue-300 px-1.5 py-0.5 rounded">25.08</span>
                     </div>
-                    <p class="text-sm font-bold text-white mt-1">מידטאון & דרום</p>
+                    <p class="text-sm font-bold text-white mt-1">SUMMIT & דרום</p>
                     <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-ship text-blue-400 ml-1"></i>שיט שקיעה</span>
                 </button>
 
@@ -152,8 +152,8 @@
                         <span class="text-xs text-amber-400 font-semibold">יום חמישי</span>
                         <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">27.08</span>
                     </div>
-                    <p class="text-sm font-bold text-white mt-1">צעצועים & הארי פוטר</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-building text-amber-400 ml-1"></i>High Line & Edge</span>
+                    <p class="text-sm font-bold text-white mt-1">טיימס סקוור & Edge</p>
+                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-wand-magic-sparkles text-amber-400 ml-1"></i>הארי פוטר & High Line</span>
                 </button>
 
                 <button onclick="selectDay(4)" id="dayBtn-4" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700">
@@ -161,7 +161,7 @@
                         <span class="text-xs text-emerald-400 font-semibold">יום שישי</span>
                         <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">28.08</span>
                     </div>
-                    <p class="text-sm font-bold text-white mt-1">SUMMIT & הבראיינט</p>
+                    <p class="text-sm font-bold text-white mt-1">צעצועים & מוזיאון הטבע</p>
                     <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-candle-holder text-emerald-400 ml-1"></i>הכנות לשבת</span>
                 </button>
 
@@ -417,55 +417,39 @@
     </div>
 
     <script>
-        // Data Structure for NYC Itinerary starting every morning from Hotel Riu Plaza New York Times Square
+        // Data Structure for NYC Itinerary starting every morning from The Pearl Hotel (233 W 49th St)
         const itineraryData = {
             1: {
                 dayName: "יום שלישי",
                 date: "25.08.2026",
-                focus: "מידטאון, דרום מנהטן ושיט שקיעה",
-                title: "מסלול יום שלישי: דרום מנהטן ושיט שקיעה",
-                fullMapUrl: "https://www.google.com/maps/dir/Hotel+Riu+Plaza+New+York+Times+Square,+305+W+46th+St,+New+York,+NY+10036/Empire+State+Building,+20+W+34th+St.,+New+York,+NY+10001/Ellen's+Stardust+Diner,+1650+Broadway,+New+York,+NY+10019/The+Oculus,+180+Greenwich+St,+New+York,+NY+10007/Pier+16,+89+South+St,+New+York,+NY+10038",
-                flow: ["מלון Riu Plaza", "Empire State / RiseNY", "Ellen's Stardust", "9/11 Memorial & Oculus", "Statue Sunset Cruise"],
+                focus: "SUMMIT One Vanderbilt, בראיינט פארק, דרום מנהטן ושיט שקיעה",
+                title: "מסלול יום שלישי: SUMMIT, דרום מנהטן ושיט שקיעה",
+                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/SUMMIT+One+Vanderbilt,+45+E+42nd+St,+New+York,+NY+10017/Grand+Central+Terminal,+New+York,+NY/Whole+Foods+Market,+1095+Avenue+of+the+Americas,+New+York,+NY+10036/The+Oculus,+180+Greenwich+St,+New+York,+NY+10007/Pier+16,+89+South+St,+New+York,+NY+10038",
+                flow: ["The Pearl Hotel", "SUMMIT One Vanderbilt", "גרנד סנטרל", "Whole Foods / Bryant Park", "Ground Zero & Oculus", "שיט שקיעה"],
                 items: [
                     {
                         id: "d1_1",
                         time: "09:00",
-                        title: "יציאה מהמלון -> תצפית אמפייר סטייט (Empire State)",
-                        address: "20 W 34th St., New York, NY 10001",
-                        googleMapUrl: "https://maps.google.com/?q=20+W+34th+St,+New+York,+NY+10001",
+                        title: "יציאה מ-The Pearl Hotel -> תצפית SUMMIT One Vanderbilt",
+                        address: "45 E 42nd St, New York, NY 10017",
+                        googleMapUrl: "https://maps.google.com/?q=45+E+42nd+St,+New+York,+NY+10017",
                         category: "views",
-                        tags: ["תצפית", "מידטאון", "אייקוני"],
-                        duration: "כ-1.5 עד 2 שעות",
-                        subway: "יציאה מ-Riu Plaza (305 W 46th St): הליכה רגלית של 15 דקות דרום-מזרחה, או סאבוויי N/Q/R/W מתחנת 49 St לתחנת 34 St - Herald Sq",
-                        details: "התחלת הבוקר מפתח המלון במידטאון. הליכה קצרה או נסיעה קלה בסאבוויי אל תצפית האמפייר סטייט.",
-                        hasAlternative: true,
-                        alternativeText: "חלופות אופציונליות לבוקר יום שלישי מהמלון:",
-                        alternatives: [
-                            {
-                                name: "אמפייר סטייט (ברירת מחדל)",
-                                text: "תצפית קלאסית בלב מידטאון (15 דק' הליכה מהמלון)."
-                            },
-                            {
-                                name: "RiseNY (מומלץ למשפחה!)",
-                                text: "סימולטור טיסה מרהיב ב-160 W 45th St – מרחק 3 דקות הליכה בלבד מעבר לפינת המלון!"
-                            },
-                            {
-                                name: "מוזיאון הטבע (AMNH)",
-                                text: "200 Central Park West – הליכה 3 דק' לתחנת 50 St ועלייה על קו C צפונה ישירות לתחנת 81 St."
-                            }
-                        ]
+                        tags: ["תצפית", "אינטראקטיבי", "אורות"],
+                        duration: "כ-2 שעות",
+                        subway: "יציאה מ-The Pearl Hotel (233 W 49th St): הליכה מזרחה של כ-12-15 דקות על רחוב 49/42, או סאבוויי N/R/W מתחנת 49St ל-Times Sq ועבר לקו 7/S לגרנד סנטרל",
+                        details: "התחלת הבוקר מפתח המלון. חוויית תצפית חושית ואינטראקטיבית מרהיבה עם מראות, בלונים שקופים ונוף 360 מעלות על מנהטן.",
                     },
                     {
                         id: "d1_2",
                         time: "11:30",
-                        title: "ארוחה ב-Ellen’s Stardust Diner",
-                        address: "1650 Broadway, New York, NY 10019",
-                        googleMapUrl: "https://maps.google.com/?q=1650+Broadway,+New+York,+NY+10019",
+                        title: "סיור ב-Grand Central & ארוחה ב-Whole Foods Market (בראיינט פארק)",
+                        address: "1095 Avenue of the Americas, New York, NY 10036",
+                        googleMapUrl: "https://maps.google.com/?q=Whole+Foods+Market+1095+Avenue+of+the+Americas+New+York",
                         category: "food",
-                        tags: ["אוכל", "חוויה", "מלצרים מזמרים"],
-                        duration: "כ-1.5 שעות (כולל המתנה בתור)",
-                        subway: "נמצא במרחק 5 דקות הליכה בלבד מפתח המלון שלכם! (רחוב 51 וברודוויי)",
-                        details: "דיינר אמריקאי אייקוני עם מלצרים מזמרים שמבצעים שירים מברודוויי. חוויה מהנה ביותר לבני נוער.",
+                        tags: ["אוכל", "גרנד סנטרל", "פארק"],
+                        duration: "כ-1.5 שעות",
+                        subway: "הליכה רגלית קצרה מ-SUMMIT לתוך תחנת גרנד סנטרל ההיסטורית, ומשם 5 דקות הליכה מערבה ל-Whole Foods מול Bryant Park",
+                        details: "התרשמות מהארכיטקטורה והתקרה הזודיאקלית של תחנת גרנד סנטרל, ואז ארוחת צהריים נעימה ומגוונת בבופה בקומה השנייה של Whole Foods המשקיף ישירות על פארק בראיינט.",
                     },
                     {
                         id: "d1_3",
@@ -476,7 +460,7 @@
                         category: "sightseeing",
                         tags: ["אנדרטה", "דרום מנהטן", "ארכיטקטורה"],
                         duration: "כ-1.5 עד 2 שעות",
-                        subway: "הליכה 3 דק' מהדיינר/מלון לתחנת 50 St, עולים על קו 1 (אדום) דרומה ויורדים ב-WTC Cortlandt",
+                        subway: "מבראיינט פארק / 42st עולים על קו 1 (אדום) או B/D/F/M דרומה ויורדים ב-WTC Cortlandt / World Trade Center",
                         details: "סיור ברחבת אנדרטת ה-11 בספטמבר (בריכות הזיכרון), מתחם ה-Oculus המרהיב ותצפית מלמטה על ה-One World Trade Center.",
                     },
                     {
@@ -488,7 +472,7 @@
                         category: "cruise",
                         tags: ["שיט", "פסל החירות", "שקיעה"],
                         duration: "כ-1.5 שעות",
-                        subway: "חזרה למלון Riu Plaza: קו 1 מתחנת South Ferry ישירות לתחנת 50 St (ירידה 4 דקות מפתח המלון)",
+                        subway: "חזרה ל-The Pearl Hotel: קו 1 מתחנת South Ferry ישירות לתחנת 50 St (ירידה 2 דקות מפתח המלון!)",
                         details: "הליכה קצרה מ-Ground Zero לרציפים. השיט מאפשר לראות את קו הרקיע של מנהטן ואת פסל החירות באור השקיעה היפהפה.",
                     }
                 ]
@@ -498,44 +482,44 @@
                 date: "26.08.2026",
                 focus: "שופינג בסוהו והופעה של ברונו מארס",
                 title: "מסלול יום רביעי: שופינג והופעת ענק",
-                fullMapUrl: "https://www.google.com/maps/dir/Hotel+Riu+Plaza+New+York+Times+Square,+305+W+46th+St,+New+York,+NY+10036/Broadway+%26+Spring+St,+New+York,+NY+10012/Hotel+Riu+Plaza+New+York+Times+Square/Penn+Station,+New+York,+NY/MetLife+Stadium,+East+Rutherford,+NJ",
-                flow: ["מלון Riu Plaza", "שופינג סוהו", "חזרה למלון למנוחה", "הליכה ל-Penn Station", "MetLife Stadium (Bruno Mars)"],
+                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Broadway+%26+Spring+St,+New+York,+NY+10012/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Penn+Station,+New+York,+NY/MetLife+Stadium,+East+Rutherford,+NJ",
+                flow: ["The Pearl Hotel", "שופינג סוהו", "חזרה למלון למנוחה", "הליכה ל-Penn Station", "MetLife Stadium (Bruno Mars)"],
                 items: [
                     {
                         id: "d2_1",
                         time: "10:00 - 13:30",
-                        title: "יציאה מהמלון -> שופינג בסוהו (SoHo)",
+                        title: "יציאה מ-The Pearl Hotel -> שופינג בסוהו (SoHo)",
                         address: "Broadway & Spring St, New York, NY 10012",
                         googleMapUrl: "https://maps.google.com/?q=Broadway+and+Spring+St,+New+York,+NY+10012",
                         category: "shopping",
                         tags: ["שופינג", "נוער", "סוהו"],
                         duration: "כ-3.5 שעות",
-                        subway: "הליכה 3 דק' מ-Riu Plaza לתחנת 49 St (שדרה 7) -> עולים על קו N/R/W דרומה לתחנת Prince St (12 דקות נסיעה)",
+                        subway: "הליכה 1-2 דקות מ-The Pearl Hotel לתחנת 49 St (שדרה 7) -> קו N/R/W דרומה לתחנת Prince St (12 דקות נסיעה)",
                         details: "האזור האהוב על בני נוער לקניות. ציר הליכה על ברודוויי (Nike, Glossier, Apple, Zara, Uniqlo) ורחובות צדדיים יפים (Prince, Spring, Greene). אוכל מומלץ: Prince Street Pizza או Balthazar Bakery.",
                     },
                     {
                         id: "d2_2",
                         time: "14:00 - 16:00",
-                        title: "חזרה למלון Riu Plaza למנוחה",
-                        address: "305 W 46th St, New York, NY 10036",
-                        googleMapUrl: "https://maps.google.com/?q=305+W+46th+St,+New+York,+NY+10036",
+                        title: "חזרה ל-The Pearl Hotel למנוחה",
+                        address: "233 W 49th St, New York, NY 10019",
+                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
                         category: "rest",
                         tags: ["מנוחה", "מלון"],
                         duration: "2 שעות",
-                        subway: "חזרה בסאבוויי קווים N / Q / R / W מתחנת Prince St לתחנת 49 St / 7th Ave (3 דק' מהמלון)",
-                        details: "מנוחה בחדר במלון ואגירת כוחות לקראת ערב עוצמתי באצטדיון.",
+                        subway: "חזרה בסאבוויי קווים N / Q / R / W מתחנת Prince St לתחנת 49 St / 7th Ave (2 דק' מפתח המלון)",
+                        details: "מנוחה בחדר במלון The Pearl ואגירת כוחות לקראת ערב עוצמתי באצטדיון.",
                     },
                     {
                         id: "d2_3",
                         time: "16:30",
-                        title: "יציאה ברגל מהמלון ל-Penn Station ורכבת לאצטדיון",
+                        title: "יציאה מהמלון ל-Penn Station ורכבת לאצטדיון",
                         address: "Penn Station - 31st St & 8th Ave, New York, NY",
                         googleMapUrl: "https://maps.google.com/?q=Penn+Station,+New+York,+NY",
                         category: "transit",
                         tags: ["רכבת", "תחבורה"],
-                        duration: "10-12 דקות הליכה רגלית מפתח המלון!",
-                        subway: "הליכה ישרה דרומה על השדרה ה-8 מ-46st ל-31st St ישירות לכניסה ל-Penn Station",
-                        details: "מפתח המלון הולכים ברגל ישר דרומה על השדרה השמינית כ-12 דקות עד Penn Station. עולים על רכבת NJ Transit לתחנת Secaucus Junction, וממשם עוברים לרכבת המיוחדת לאצטדיון (Meadowlands Station). חשוב: לקנות כרטיסים מראש!",
+                        duration: "כ-12-15 דקות הליכה / 1 תחנה בסאבוויי קו 1 או A/C/E",
+                        subway: "הליכה דרומה על השדרה ה-8 מ-49st ל-31st St ישירות ל-Penn Station (או סאבוויי E/A/C מ-50st ל-34st)",
+                        details: "יציאה מ-The Pearl Hotel אל Penn Station. עולים על רכבת NJ Transit לתחנת Secaucus Junction, וממשם עוברים לרכבת המיוחדת לאצטדיון (Meadowlands Station). חשוב: לקנות כרטיסים מראש!",
                     },
                     {
                         id: "d2_4",
@@ -546,7 +530,7 @@
                         category: "concert",
                         tags: ["הופעה", "מוזיקה", "שיא"],
                         duration: "ערב שלם",
-                        subway: "חזרה ברכבות המקשרות בסיום ההופעה ל-Penn Station והליכה/מונית קצרה צפונה למלון Riu Plaza",
+                        subway: "חזרה ברכבות המקשרות בסיום ההופעה ל-Penn Station והליכה/מונית צפונה ל-The Pearl Hotel",
                         details: "מופע ענק באצטדיון מטלייף. הגעה מוקדמת מאפשרת כניסה רגועה, קניית מרצ'נדייז ואוכל.",
                     }
                 ]
@@ -554,38 +538,38 @@
             3: {
                 dayName: "יום חמישי",
                 date: "27.08.2026",
-                focus: "צעצועים, הארי פוטר, צ'לסי מרקט והאיי ליין",
-                title: "מסלול יום חמישי: קניות, קולינריה ותצפית The Edge",
-                fullMapUrl: "https://www.google.com/maps/dir/Hotel+Riu+Plaza+New+York+Times+Square,+305+W+46th+St,+New+York,+NY+10036/FAO+Schwarz,+30+Rockefeller+Plaza,+New+York,+NY+10111/Harry+Potter+New+York,+935+Broadway,+New+York,+NY+10010/Chelsea+Market,+75+9th+Ave,+New+York,+NY+10011/The+High+Line,+New+York,+NY/Edge,+30+Hudson+Yards,+New+York,+NY+10001",
-                flow: ["מלון Riu Plaza", "FAO Schwarz (הליכה 10 דק')", "Harry Potter NYC", "Chelsea Market", "High Line Park", "The Edge"],
+                focus: "טיימס סקוור, 34st, הארי פוטר, צ'לסי מרקט, ה-High Line ותצפית Edge",
+                title: "מסלול יום חמישי: חנויות נושא, רחוב 34, הליכה קולינרית ושיא הגובה",
+                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Times+Square,+New+York,+NY/Empire+State+Building,+New+York,+NY/Harry+Potter+New+York,+935+Broadway,+New+York,+NY+10010/Chelsea+Market,+75+9th+Ave,+New+York,+NY+10011/Edge,+30+Hudson+Yards,+New+York,+NY+10001",
+                flow: ["The Pearl Hotel", "טיימס סקוור (M&M, Hershey's)", "רחוב 34 & האמפייר סטייט", "Harry Potter NYC", "Chelsea Market", "High Line Park", "The Edge"],
                 items: [
                     {
                         id: "d3_1",
                         time: "09:30",
-                        title: "יציאה מהמלון ברגל -> FAO Schwarz (רוקפלר)",
-                        address: "30 Rockefeller Plaza, New York, NY 10111",
-                        googleMapUrl: "https://maps.google.com/?q=30+Rockefeller+Plaza,+New+York,+NY+10111",
+                        title: "יציאה מ-The Pearl Hotel -> טיימס סקוור (M&M, Hershey's) והליכה לרחוב 34",
+                        address: "Times Square & 34th St Herald Sq, New York, NY",
+                        googleMapUrl: "https://maps.google.com/?q=Times+Square+New+York",
                         category: "shopping",
-                        tags: ["צעצועים", "רוקפלר", "משפחה"],
-                        duration: "כ-1.5 שעות",
-                        subway: "הליכה רגלית קלה ונעימה של 10 דקות בלבד מפתח המלון מזרחה על רחוב 46/48 עד רוקפלר סנטר!",
-                        details: "חנות הצעצועים המפורסמת בעולם במתחם רוקפלר סנטר, כולל פסנתר הרצפה הענק.",
+                        tags: ["טיימס סקוור", "שוקולד", "אמפייר סטייט"],
+                        duration: "כ-2 שעות",
+                        subway: "הליכה רגלית של 3-5 דקות מ-The Pearl Hotel ישירות ללב טיימס סקוור, ומשם הליכה חווייתית דרומה על ברודוויי עד רחוב 34 (Herald Sq)",
+                        details: "הליכה מהמלון אל חנויות הנושא הענקיות של M&M's ו-Hershey's בטיימס סקוור. ממשיכים בהליכה ברחובות הכיפיים של ניו יורק לכיוון רחוב 34 לצפייה מקרוב בבניין האמפייר סטייט האייקוני ושדכן הקניות של Herald Square.",
                     },
                     {
                         id: "d3_2",
-                        time: "11:30",
+                        time: "12:00",
                         title: "חנות הארי פוטר (Harry Potter NYC)",
                         address: "935 Broadway, New York, NY 10010",
                         googleMapUrl: "https://maps.google.com/?q=935+Broadway,+New+York,+NY+10010",
                         category: "shopping",
                         tags: ["הארי פוטר", "חוויה", "פלאטאיירון"],
                         duration: "כ-1 שעה",
-                        subway: "מרוקפלר (תחנת 47-50 Sts) עולים על קו F או D דרומה לתחנת 23 St",
-                        details: "חנות קונספט ענקית ומדהימה לחובבי הארי פוטר ליד בניין הפלאטאיירון.",
+                        subway: "מרחוב 34 (Herald Sq) הליכה רגלית של 10 דקות דרומה על ברודוויי עד רחוב 23 (בניין הפלאטאיירון)",
+                        details: "חנות קונספט ענקית ומדהימה לחובבי הארי פוטר ליד בניין הפלאטאיירון, כולל אביזרים, גלידות בטרבירה וחוויות אינטראקטיביות.",
                     },
                     {
                         id: "d3_3",
-                        time: "13:00",
+                        time: "13:30",
                         title: "שוק האוכל Chelsea Market",
                         address: "75 9th Ave, New York, NY 10011",
                         googleMapUrl: "https://maps.google.com/?q=75+9th+Ave,+New+York,+NY+10011",
@@ -597,7 +581,7 @@
                     },
                     {
                         id: "d3_4",
-                        time: "15:00",
+                        time: "15:30",
                         title: "הליכה על פארק ה-High Line",
                         address: "Gansevoort St & Washington St to Hudson Yards",
                         googleMapUrl: "https://maps.google.com/?q=The+High+Line,+New+York,+NY",
@@ -609,14 +593,14 @@
                     },
                     {
                         id: "d3_5",
-                        time: "17:00 / 17:30",
+                        time: "17:30",
                         title: "תצפית The Edge (Hudson Yards)",
                         address: "30 Hudson Yards, New York, NY 10001",
                         googleMapUrl: "https://maps.google.com/?q=30+Hudson+Yards,+New+York,+NY+10001",
                         category: "views",
                         tags: ["תצפית", "זכוכית", "גובה"],
                         duration: "כ-1.5 שעות",
-                        subway: "חזרה למלון Riu Plaza: קו 7 מ-34 St Hudson Yards לטיימס סקוור (2 תחנות) והליכה 5 דק' למלון",
+                        subway: "חזרה ל-The Pearl Hotel: קו 7 מ-34 St Hudson Yards לטיימס סקוור (2 תחנות) והליכה 3 דק' למלון",
                         details: "סיום ה-High Line מביא אתכם בדיוק לתצפית The Edge - מרפסת הזכוכית השקופה הבולטת ביותר במערב.",
                     }
                 ]
@@ -624,53 +608,53 @@
             4: {
                 dayName: "יום שישי",
                 date: "28.08.2026",
-                focus: "תצפית מודרנית והכנות לשבת",
-                title: "מסלול יום שישי: SUMMIT One Vanderbilt והתארגנות לשבת",
-                fullMapUrl: "https://www.google.com/maps/dir/Hotel+Riu+Plaza+New+York+Times+Square,+305+W+46th+St,+New+York,+NY+10036/SUMMIT+One+Vanderbilt,+45+E+42nd+St,+New+York,+NY+10017/Grand+Central+Terminal,+89+E+42nd+St,+New+York,+NY+10017/Bryant+Park,+New+York,+NY+10018/Hotel+Riu+Plaza+New+York+Times+Square",
-                flow: ["מלון Riu Plaza", "SUMMIT (הליכה 12 דק')", "Grand Central", "Bryant Park", "התארגנות במלון (19:25 שבת)"],
+                focus: "FAO Schwarz, המוזיאון להיסטוריה של הטבע והכנות לשבת",
+                title: "מסלול יום שישי: FAO Schwarz, מוזיאון הטבע והתארגנות לשבת",
+                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/FAO+Schwarz,+30+Rockefeller+Plaza,+New+York,+NY+10111/American+Museum+of+Natural+History,+200+Central+Park+W,+New+York,+NY+10024/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019",
+                flow: ["The Pearl Hotel", "FAO Schwarz & השדרה ה-5", "מוזיאון הטבע (12:00)", "התארגנות במלון (19:25 שבת)"],
                 items: [
                     {
                         id: "d4_1",
-                        time: "09:00",
-                        title: "יציאה מהמלון ברגל -> SUMMIT One Vanderbilt",
-                        address: "45 E 42nd St, New York, NY 10017",
-                        googleMapUrl: "https://maps.google.com/?q=45+E+42nd+St,+New+York,+NY+10017",
-                        category: "views",
-                        tags: ["תצפית", "אינטראקטיבי", "אורות"],
+                        time: "09:30",
+                        title: "יציאה מ-The Pearl Hotel -> FAO Schwarz והשדרה החמישית",
+                        address: "30 Rockefeller Plaza, New York, NY 10111",
+                        googleMapUrl: "https://maps.google.com/?q=30+Rockefeller+Plaza,+New+York,+NY+10111",
+                        category: "shopping",
+                        tags: ["צעצועים", "רוקפלר", "השדרה ה-5"],
                         duration: "כ-2 שעות",
-                        subway: "הליכה רגלית ישרה ומהנה של כ-12-15 דקות מפתח המלון מזרחה על רחוב 45/42 עד גרנד סנטרל!",
-                        details: "חוויית תצפית חושית ואינטראקטיבית מרהיבה עם מראות, בלונים שקופים ונוף 360 מעלות על מנהטן.",
+                        subway: "הליכה רגלית קלה ונעימה של 8-10 דקות מ-The Pearl Hotel מזרחה על רחוב 49 מזרח עד רוקפלר סנטר והשדרה החמישית!",
+                        details: "חנות הצעצועים המפורסמת בעולם במתחם רוקפלר סנטר, כולל פסנתר הרצפה הענק, וסיור חנויות בשדרה החמישית האייקונית.",
                     },
                     {
                         id: "d4_2",
-                        time: "11:30",
-                        title: "Grand Central & Bryant Park",
-                        address: "Bryant Park, New York, NY 10018",
-                        googleMapUrl: "https://maps.google.com/?q=Bryant+Park,+New+York,+NY+10018",
-                        category: "walk",
-                        tags: ["פארק", "היסטוריה", "ספרייה"],
-                        duration: "כ-1.5 שעות",
-                        subway: "הליכה רגלית קצרה מערבה על רחוב 42 (כ-5 דקות) לכיוון המלון",
-                        details: "הצצה לאולם המרכזי של תחנת גרנד סנטרל, ומנוחה נעימה בבראיינט פארק הצמוד לספרייה הציבורית המפורסמת.",
+                        time: "12:00",
+                        title: "מוזיאון להיסטוריה של הטבע (AMNH)",
+                        address: "200 Central Park West, New York, NY 10024",
+                        googleMapUrl: "https://maps.google.com/?q=200+Central+Park+West,+New+York,+NY+10024",
+                        category: "museum",
+                        tags: ["מוזיאון", "טבע", "דינוזאורים", "ילדים"],
+                        duration: "כ-2.5 עד 3 שעות",
+                        subway: "מרוקפלר סנטר / 50st עולים על קו B (כתום) או קו C (כחול) צפונה (Uptown) ישירות לתחנת 81 St - Museum of Natural History!",
+                        details: "אחד המוזיאונים הטובים בעולם לילדים ונוער! אולמות הדינוזאורים הענקיים, לווייתן הענק, חדר האבנים היקרות והמטאוריטים וחוויית חלל מרתקת.",
                     },
                     {
                         id: "d4_3",
-                        time: "13:30 - 15:00",
-                        title: "קניות/אוכל כשר לשבת וחזרה למלון Riu Plaza",
-                        address: "305 W 46th St, New York, NY 10036",
-                        googleMapUrl: "https://maps.google.com/?q=305+W+46th+St,+New+York,+NY+10036",
+                        time: "15:30",
+                        title: "קניות/אוכל כשר לשבת וחזרה ל-The Pearl Hotel",
+                        address: "233 W 49th St, New York, NY 10019",
+                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
                         category: "shabbat",
                         tags: ["שבת", "אוכל כשר", "התארגנות"],
                         duration: "אחה\"צ",
-                        subway: "הליכה רגלית של 8 דקות מבראיינט פארק בחזרה לחדר במלון",
-                        details: "רכישת אוכל כשר מוכן לשבת, חזרה מוקדמת למלון Riu Plaza למנוחה והתארגנות נינוחה לפני כניסת השבת.",
+                        subway: "חזרה ממוזיאון הטבע: קו C/B מתחנת 81 St דרומה ישירות לתחנת 50 St (ירידה צמוד למלון!)",
+                        details: "רכישת אוכל כשר מוכן לשבת, חזרה מוקדמת למלון The Pearl למנוחה והתארגנות נינוחה לפני כניסת השבת.",
                     },
                     {
                         id: "d4_4",
                         time: "19:25",
-                        title: "כניסת שבת במלון Riu Plaza",
-                        address: "305 W 46th St, New York, NY 10036",
-                        googleMapUrl: "https://maps.google.com/?q=305+W+46th+St,+New+York,+NY+10036",
+                        title: "כניסת שבת במלון The Pearl Hotel",
+                        address: "233 W 49th St, New York, NY 10019",
+                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
                         category: "shabbat",
                         tags: ["שבת"],
                         duration: "-",
@@ -684,8 +668,8 @@
                 date: "29.08.2026",
                 focus: "שבת רגלית בסנטרל פארק",
                 title: "מסלול יום שבת: טיול רגלי מהמלון לסנטרל פארק",
-                fullMapUrl: "https://www.google.com/maps/dir/Hotel+Riu+Plaza+New+York+Times+Square,+305+W+46th+St,+New+York,+NY+10036/Central+Park+Zoo,+East+64th+St,+New+York,+NY+10021/Bethesda+Terrace,+72nd+Street+Transverse,+New+York,+NY+10021/The+Mall,+Mid-Park+at+67th+Street,+New+York,+NY+10022/Hotel+Riu+Plaza+New+York+Times+Square",
-                flow: ["מלון Riu Plaza (הליכה 20 דק')", "גן החיות בסנטרל פארק", "The Mall & Bethesda Fountain", "Sheep Meadow (פיקניק)", "חזרה ברגל למלון"],
+                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Central+Park+Zoo,+East+64th+St,+New+York,+NY+10021/Bethesda+Terrace,+72nd+Street+Transverse,+New+York,+NY+10021/The+Mall,+Mid-Park+at+67th+Street,+New+York,+NY+10022/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019",
+                flow: ["The Pearl Hotel (הליכה 20 דק')", "גן החיות בסנטרל פארק", "The Mall & Bethesda Fountain", "Sheep Meadow (פיקניק)", "חזרה ברגל למלון"],
                 items: [
                     {
                         id: "d5_1",
@@ -695,8 +679,8 @@
                         googleMapUrl: "https://maps.google.com/?q=East+64th+St+and+5th+Ave,+New+York,+NY+10021",
                         category: "zoo",
                         tags: ["גן חיות", "משפחה", "סנטרל פארק", "שבת"],
-                        duration: "כ-20 דקות הליכה (1.2 מייל)",
-                        subway: "מסלול רגלי לשבת מ-Riu Plaza: הולכים צפונה על השדרה ה-8 עד Columbus Circle (רחוב 59), ומשם מזרחה לאורך Central Park South עד שדרה 5 ורחוב 64. מסלול ישר, בטוח וקל!",
+                        duration: "כ-20 דקות הליכה (1 מייל)",
+                        subway: "מסלול רגלי לשבת מ-The Pearl Hotel: הולכים צפונה על השדרה ה-8 מ-49st עד Columbus Circle (רחוב 59), ומשם מזרחה לאורך Central Park South עד שדרה 5 ורחוב 64. מסלול ישר, בטוח וקל!",
                         details: "גן חיות מקסים ופסטורלי בלב הפארק. חשוב מאוד: להדפיס כרטיסים מראש מיום שישי (אין לטלטל/להציג בטלפון בשבת)!",
                     },
                     {
@@ -709,7 +693,7 @@
                         tags: ["סנטרל פארק", "מזרקה", "פיקניק"],
                         duration: "כ-3.5 שעות",
                         subway: "הליכה רגלית בפארק בחזרה לכיוון המלון",
-                        details: "הליכה בשביל השدرות The Mall, הגעה למזרקת בת'סדה המפורסמת (Bethesda Fountain), מנוחה ופיקניק מדשאות Sheep Meadow, וחזרה רגלית נינוחה למלון Riu Plaza.",
+                        details: "הליכה בשביל השדרות The Mall, הגעה למזרקת בת'סדה המפורסמת (Bethesda Fountain), מנוחה ופיקניק מדשאות Sheep Meadow, וחזרה רגלית נינוחה ל-The Pearl Hotel.",
                     }
                 ]
             },
@@ -718,25 +702,25 @@
                 date: "30.08.2026",
                 focus: "פרידה מניו יורק וטיסה לישראל",
                 title: "מסלול יום ראשון: אריזות ויציאה לשדה התעופה",
-                fullMapUrl: "https://www.google.com/maps/dir/Hotel+Riu+Plaza+New+York+Times+Square,+305+W+46th+St,+New+York,+NY+10036",
-                flow: ["ארוחת בוקר במלון", "אריזות & Check-out", "נסיעה מ-Riu Plaza לשדה התעופה"],
+                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019",
+                flow: ["ארוחת בוקר במלון", "אריזות & Check-out", "נסיעה מ-The Pearl לשדה התעופה"],
                 items: [
                     {
                         id: "d6_1",
                         time: "בוקר",
                         title: "ארוחת בוקר במלון, אריזות וצ'ק-אאוט",
-                        address: "Hotel Riu Plaza New York Times Square",
-                        googleMapUrl: "https://maps.google.com/?q=305+W+46th+St,+New+York,+NY+10036",
+                        address: "The Pearl Hotel - 233 W 49th St",
+                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
                         category: "hotel",
                         tags: ["מלון", "התארגנות"],
                         duration: "בוקר",
                         subway: "-",
-                        details: "ארוחת בוקר אחרונה במנהטן במלון Riu Plaza, שמירת מזוודות בדלפק או פינוי החדר.",
+                        details: "ארוחת בוקר אחרונה במנהטן במלון The Pearl, שמירת מזוודות בדלפק או פינוי החדר.",
                     },
                     {
                         id: "d6_2",
                         time: "צהריים",
-                        title: "נסיעה מ-Riu Plaza לשדה התעופה (JFK / EWR / LGA)",
+                        title: "נסיעה מ-The Pearl Hotel לשדה התעופה (JFK / EWR / LGA)",
                         address: "Airport",
                         googleMapUrl: "https://maps.google.com",
                         category: "transit",
@@ -751,13 +735,14 @@
 
         // Ticket checklist items with state
         const ticketChecklist = [
-            { id: "t1", name: "תצפית Empire State Building (או RiseNY)", day: "יום ג' (25.08)", required: true },
+            { id: "t1", name: "תצפית SUMMIT One Vanderbilt", day: "יום ג' (25.08)", required: true },
             { id: "t2", name: "שיט שקיעה (Statue at Sunset Cruise)", day: "יום ג' (25.08)", required: true },
             { id: "t3", name: "כרטיסים להופעה של Bruno Mars", day: "יום ד' (26.08)", required: true },
             { id: "t4", name: "כרטיסי רכבת NJ Transit הלוך-חזור ל-MetLife", day: "יום ד' (26.08)", required: true },
-            { id: "t5", name: "תצפית The Edge (Hudson Yards)", day: "יום ה' (27.08)", required: true },
-            { id: "t6", name: "תצפית SUMMIT One Vanderbilt", day: "יום ו' (28.08)", required: true },
-            { id: "t7", name: "גן החיות בסנטרל פארק (מודפס מראש לשבת!)", day: "יום ש' (29.08)", required: true },
+            { id: "t5", name: "חנות הארי פוטר (הזמנת תור/מקום אם נדרש)", day: "יום ה' (27.08)", required: false },
+            { id: "t6", name: "תצפית The Edge (Hudson Yards)", day: "יום ה' (27.08)", required: true },
+            { id: "t7", name: "מוזיאון הטבע AMNH (כרטיסים לשעה 12:00)", day: "יום ו' (28.08)", required: true },
+            { id: "t8", name: "גן החיות בסנטרל פארק (מודפס מראש לשבת!)", day: "יום ש' (29.08)", required: true },
         ];
 
         let currentDay = 1;
