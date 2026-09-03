@@ -1,1003 +1,428 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ניו יורק 2026 - מסלול אינטראקטיבי</title>
-    <!-- Tailwind CSS -->
+    <title>Travel Hub 2026 | My Journeys</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter & Rubik -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Rubik', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
                     },
                     colors: {
-                        nygold: '#F8DE22',
-                        nyaccent: '#38E54D',
-                        subwayRed: '#EE352E',
-                        subwayBlue: '#0039A6',
-                        subwayOrange: '#FF6319',
-                        subwayYellow: '#FCCC0A',
-                        subwayGreen: '#00933C',
-                        subwayPurple: '#B308A5',
-                        nyblue: '#0F2C59'
+                        primary: '#f97316',
+                        dark: '#090d16',
+                        cardDark: '#111827',
                     }
                 }
             }
         }
     </script>
+
     <style>
         body {
-            font-family: 'Rubik', sans-serif;
-            background-color: #0b1329;
-            color: #f3f4f6;
+            background-color: #070a12;
+            color: #f1f5f9;
         }
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        /* Ambient Glow effects */
+        .ambient-glow {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(100px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
         }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        /* Card hover polish */
+        .trip-card {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        .trip-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(249, 115, 22, 0.45);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.7), 0 0 20px 2px rgba(249, 115, 22, 0.15);
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.6);
+
+        .trip-image-zoom {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #3b82f6;
-            border-radius: 4px;
-        }
-        .animate-pulse-slow {
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .trip-card:hover .trip-image-zoom {
+            transform: scale(1.06);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col pb-20 md:pb-6 custom-scrollbar">
+<body class="min-h-screen flex flex-col font-sans relative overflow-x-hidden selection:bg-orange-500 selection:text-white">
 
-    <!-- Top Navigation / Header -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800 px-4 py-3 shadow-xl">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
-                    <i class="fa-solid fa-plane-arrival text-lg"></i>
+    <!-- Ambient background glows -->
+    <div class="ambient-glow w-96 h-96 bg-orange-600 top-[-80px] left-[-80px]"></div>
+    <div class="ambient-glow w-[32rem] h-[32rem] bg-indigo-600 bottom-10 right-[-100px]"></div>
+    <div class="ambient-glow w-80 h-80 bg-amber-500 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+
+    <!-- Navigation Bar -->
+    <header class="relative z-10 w-full border-b border-slate-800/80 bg-slate-950/60 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-orange-500 via-amber-500 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-compass text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 via-indigo-200 to-amber-300 bg-clip-text text-transparent">
-                        מסלול ניו יורק 2026
-                    </h1>
-                    <p class="text-xs text-slate-400">25.08.2026 - 30.08.2026 | נקודת מוצא: The Pearl Hotel (233 W 49th St)</p>
+                    <span class="text-xs uppercase tracking-widest text-orange-400 font-semibold block">Travel Hub</span>
+                    <span class="text-lg font-bold text-white tracking-tight group-hover:text-orange-400 transition-colors">Expeditions 2026</span>
                 </div>
-            </div>
+            </a>
 
-            <!-- Global Search & Stats -->
-            <div class="flex items-center gap-3 w-full sm:w-auto">
-                <div class="relative flex-1 sm:w-64">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-slate-400 text-sm"></i>
-                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="חפש אטרקציה, שופינג, סאבוויי..." 
-                        class="w-full bg-slate-900/80 border border-slate-700 rounded-lg pr-9 pl-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500 transition">
+            <!-- Quick Badges & Actions -->
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-2 bg-slate-900/80 border border-slate-800 rounded-full px-4 py-1.5 text-xs text-slate-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>2 Active Folders Ready</span>
                 </div>
-                <div class="bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-chart-line text-emerald-400 text-xs"></i>
-                    <span class="text-xs text-slate-300">התקדמות: <span id="progressPercent" class="font-bold text-emerald-400">0%</span></span>
-                </div>
+                <button onclick="toggleInfoModal()" class="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white flex items-center justify-center border border-slate-700/60 transition" title="Hub Information">
+                    <i class="fa-solid fa-circle-info text-sm"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Main App Container -->
-    <main class="max-w-7xl mx-auto w-full px-4 pt-6 flex-grow flex flex-col gap-6">
+    <!-- Main Content -->
+    <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 flex flex-col justify-center">
 
-        <!-- Progress Bar -->
-        <div class="w-full bg-slate-900/80 rounded-full h-2 overflow-hidden border border-slate-800">
-            <div id="progressBarFill" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-full w-0 transition-all duration-500"></div>
-        </div>
-
-        <!-- Main Section Navigation Tabs -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800 custom-scrollbar text-sm font-medium">
-            <button onclick="switchMainTab('itinerary')" id="tabBtn-itinerary" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 transition bg-blue-600 text-white shadow-lg shadow-blue-600/30">
-                <i class="fa-solid fa-calendar-days"></i>
-                <span>מסלול יומי</span>
-            </button>
-            <button onclick="switchMainTab('transit')" id="tabBtn-transit" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-                <i class="fa-solid fa-train-subway"></i>
-                <span>תחבורה וסאבוויי</span>
-            </button>
-            <button onclick="switchMainTab('tickets')" id="tabBtn-tickets" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-                <i class="fa-solid fa-ticket"></i>
-                <span>כרטיסים ומעקב</span>
-            </button>
-            <button onclick="switchMainTab('shabbat')" id="tabBtn-shabbat" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 transition bg-slate-800 text-slate-300 hover:bg-slate-700">
-                <i class="fa-solid fa-star-of-david"></i>
-                <span>מדריך שבת</span>
-            </button>
-        </div>
-
-        <!-- VIEW 1: ITINERARY VIEW -->
-        <div id="view-itinerary" class="view-content flex flex-col gap-6">
-            
-            <!-- Day Selector Pills -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                <button onclick="selectDay(1)" id="dayBtn-1" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-gradient-to-br from-blue-900/60 to-slate-800 border-blue-500 shadow-lg shadow-blue-900/20">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-blue-400 font-semibold">יום שלישי</span>
-                        <span class="text-[10px] bg-blue-900/80 text-blue-300 px-1.5 py-0.5 rounded">25.08</span>
-                    </div>
-                    <p class="text-sm font-bold text-white mt-1">SUMMIT & דרום</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-ship text-blue-400 ml-1"></i>שיט שקיעה</span>
-                </button>
-
-                <button onclick="selectDay(2)" id="dayBtn-2" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-indigo-400 font-semibold">יום רביעי</span>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">26.08</span>
-                    </div>
-                    <p class="text-sm font-bold text-white mt-1">סוהו & הופעה</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-music text-purple-400 ml-1"></i>ברונו מארס</span>
-                </button>
-
-                <button onclick="selectDay(3)" id="dayBtn-3" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-amber-400 font-semibold">יום חמישי</span>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">27.08</span>
-                    </div>
-                    <p class="text-sm font-bold text-white mt-1">טיימס סקוור & Edge</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-wand-magic-sparkles text-amber-400 ml-1"></i>הארי פוטר & High Line</span>
-                </button>
-
-                <button onclick="selectDay(4)" id="dayBtn-4" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-emerald-400 font-semibold">יום שישי</span>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">28.08</span>
-                    </div>
-                    <p class="text-sm font-bold text-white mt-1">צעצועים & מוזיאון הטבע</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-candle-holder text-emerald-400 ml-1"></i>הכנות לשבת</span>
-                </button>
-
-                <button onclick="selectDay(5)" id="dayBtn-5" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-yellow-400 font-semibold">יום שבת</span>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">29.08</span>
-                    </div>
-                    <p class="text-sm font-bold text-white mt-1">סנטרל פארק</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-tree text-emerald-400 ml-1"></i>שבת רגלית</span>
-                </button>
-
-                <button onclick="selectDay(6)" id="dayBtn-6" class="day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-rose-400 font-semibold">יום ראשון</span>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">30.08</span>
-                    </div>
-                    <p class="text-sm font-bold text-white mt-1">חזרה הביתה</p>
-                    <span class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-plane-departure text-rose-400 ml-1"></i>טיסה לישראל</span>
-                </button>
+        <!-- Hero Section -->
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-transparent border border-orange-500/20 text-orange-400 text-xs font-semibold mb-4 tracking-wide">
+                <i class="fa-solid fa-plane-departure text-[11px]"></i>
+                Personal Itineraries & Maps
             </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15] mb-5">
+                Where are we headed <span class="bg-gradient-to-r from-orange-400 via-amber-300 to-rose-400 bg-clip-text text-transparent italic font-normal">in 2026?</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                Select an adventure below to explore custom interactive schedules, curated dining spots, shopping, landmarks, and live navigation maps.
+            </p>
 
-            <!-- Active Day Card Container -->
-            <div class="glass-panel rounded-2xl p-4 md:p-6 border border-slate-800 shadow-2xl">
-                <!-- Day Header -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-4 border-b border-slate-800 gap-4">
+            <!-- Search & Filters -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <div class="relative w-full sm:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input 
+                        type="text" 
+                        id="tripSearch" 
+                        oninput="filterDestinations()"
+                        placeholder="Search destination, food, state..." 
+                        class="w-full bg-slate-900/90 border border-slate-800 focus:border-orange-500 rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-orange-500/50 transition">
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-center">
+                    <button onclick="setFilter('all')" class="filter-btn active px-3.5 py-2 rounded-xl text-xs font-semibold bg-orange-600 text-white shadow-md transition">All (2)</button>
+                    <button onclick="setFilter('south')" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 transition">Tennessee</button>
+                    <button onclick="setFilter('east')" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 transition">New York</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trips Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch" id="destinationsGrid">
+
+            <!-- Card 1: Nashville 2026 -->
+            <div class="trip-card group bg-slate-900/70 border border-slate-800/90 rounded-3xl overflow-hidden flex flex-col backdrop-blur-sm relative" data-title="nashville" data-region="south" data-tags="country music broadway bbq tennessee shopping hot chicken">
+                
+                <!-- Destination Image / Header -->
+                <div class="relative h-60 w-full overflow-hidden bg-slate-800">
+                    <img 
+                        src="https://images.unsplash.com/photo-1546874177-9e664107314e?auto=format&fit=crop&w=800&q=80" 
+                        alt="Nashville Music City" 
+                        class="trip-image-zoom w-full h-full object-cover">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    
+                    <!-- State / Type Badge -->
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="bg-amber-500/90 backdrop-blur-md text-slate-950 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                            Tennessee
+                        </span>
+                        <span class="bg-black/50 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/10">
+                            2026 Trip
+                        </span>
+                    </div>
+
+                    <!-- Path indicator pill -->
+                    <div class="absolute top-4 right-4 bg-slate-900/90 border border-slate-700/70 text-slate-300 text-[10px] font-mono px-2 py-1 rounded-lg backdrop-blur">
+                        <i class="fa-regular fa-folder-open text-amber-400 mr-1"></i>/nashville2026
+                    </div>
+
+                    <!-- Title overlaid -->
+                    <div class="absolute bottom-4 left-5 right-5">
+                        <span class="text-amber-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                            <i class="fa-solid fa-guitar"></i> Music City, USA
+                        </span>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Nashville</h3>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-6">
                     <div>
-                        <div class="flex items-center gap-2">
-                            <span id="activeDayBadge" class="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">יום שלישי 25.08</span>
-                            <span class="text-xs text-slate-400" id="activeDayFocus">דגש: מידטאון, דרום מנהטן ושיט שקיעה</span>
-                        </div>
-                        <h2 id="activeDayTitle" class="text-2xl font-extrabold text-white mt-1">מסלול יום שלישי: דרום מנהטן ושיט שקיעה</h2>
-                    </div>
-
-                    <!-- Day Route Quick Map Link -->
-                    <a id="activeDayFullMap" href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
-                        class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg transition duration-200">
-                        <i class="fa-solid fa-map-location-dot text-sm"></i>
-                        <span>פתח מסלול מלא בגוגל מפס</span>
-                    </a>
-                </div>
-
-                <!-- Interactive Route Diagram Banner -->
-                <div class="my-4 p-3 bg-slate-900/90 rounded-xl border border-slate-800 flex items-center gap-2 overflow-x-auto custom-scrollbar text-xs" id="routeFlowDiagram">
-                    <!-- Dynamic route pills will be injected here -->
-                </div>
-
-                <!-- Timeline Items List -->
-                <div id="timelineContainer" class="space-y-6 mt-6 relative before:absolute before:inset-0 before:left-auto before:right-[17px] md:before:right-[21px] before:w-0.5 before:bg-slate-800">
-                    <!-- Timeline Items Injected Dynamically JS -->
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 2: TRANSIT & SUBWAY GUIDE -->
-        <div id="view-transit" class="view-content hidden flex-col gap-6">
-            <div class="glass-panel rounded-2xl p-6 border border-slate-800">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
-                    <i class="fa-solid fa-train-subway text-blue-400"></i>
-                    מדריך תחבורה, סאבוויי ורכבות
-                </h2>
-                <p class="text-xs text-slate-400 mt-1">כל הטיפים להתניידות קלה, OMNY וגישה לאצטדיון MetLife ביום הופעה</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <!-- OMNY Card -->
-                    <div class="glass-card p-5 rounded-xl border border-slate-700/60">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-credit-card text-lg"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-white">תשלום בסאבוויי (OMNY)</h3>
-                                <p class="text-xs text-slate-400">ללא צורך בקניית MetroCard מראש</p>
-                            </div>
-                        </div>
-                        <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside">
-                            <li>מעבירים כרטיס אשראי ללא מגע (Contactless) / Apple Pay / Google Pay בטורניקטים.</li>
-                            <li><strong>תקרת נסיעות:</strong> לאחר 12 נסיעות באותו שבוע באותו כרטיס, שאר הנסיעות באותו שבוע בחינם!</li>
-                            <li>לכל בן משפחה מומלץ להשתמש במכשיר/כרטיס נפרד לקבלת התקרה האישית.</li>
-                        </ul>
-                    </div>
-
-                    <!-- MetLife Stadium Transit -->
-                    <div class="glass-card p-5 rounded-xl border border-amber-500/30 bg-amber-950/10">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-guitar text-lg"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-amber-300">הוראות הגעה להופעה ב-MetLife (יום ד')</h3>
-                                <p class="text-xs text-amber-400/80">נסיעה ממידטאון לאצטדיון בניו ג'רזי</p>
-                            </div>
-                        </div>
-                        <ol class="text-xs text-slate-300 space-y-2.5 list-decimal list-inside">
-                            <li>מגיעים לתחנת <strong>Penn Station</strong> (רחוב 31 ושדרה 8).</li>
-                            <li>קונים במכונות כרטיס <strong>NJ Transit</strong> לתחנת <strong>Meadowlands Station</strong> (קנו הלוך-חזור בבוקר מראש!).</li>
-                            <li>עולים על רכבת NJ Transit לתחנת מעבר <strong>Secaucus Junction</strong> (כ-10 דקות).</li>
-                            <li>עוברים לרכבת המקשרת <strong>Meadowlands Rail Line</strong> היישר לאצטדיון (כ-12 דקות נוספות).</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- Subway Lines Quick Legend -->
-                <div class="mt-8">
-                    <h3 class="text-sm font-bold text-slate-200 mb-4">קווי סאבוויי מרכזיים במסלול שלכם:</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-full bg-subwayRed text-white font-bold text-xs flex items-center justify-center">1</span>
-                            <div>
-                                <p class="text-xs font-bold text-white">קו אדום 1</p>
-                                <p class="text-[10px] text-slate-400">אנדרטת התאומים</p>
-                            </div>
-                        </div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-full bg-subwayYellow text-black font-bold text-xs flex items-center justify-center">N R</span>
-                            <div>
-                                <p class="text-xs font-bold text-white">קו צהוב</p>
-                                <p class="text-[10px] text-slate-400">סוהו / טיימס סקוור</p>
-                            </div>
-                        </div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-full bg-subwayOrange text-white font-bold text-xs flex items-center justify-center">B D F</span>
-                            <div>
-                                <p class="text-xs font-bold text-white">קו כתום</p>
-                                <p class="text-[10px] text-slate-400">רוקפלר / AMNH</p>
-                            </div>
-                        </div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-full bg-subwayGreen text-white font-bold text-xs flex items-center justify-center">4 5 6</span>
-                            <div>
-                                <p class="text-xs font-bold text-white">קו ירוק</p>
-                                <p class="text-[10px] text-slate-400">גרנד סנטרל / סוהו</p>
-                            </div>
-                        </div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-full bg-subwayPurple text-white font-bold text-xs flex items-center justify-center">7</span>
-                            <div>
-                                <p class="text-xs font-bold text-white">קו סגול 7</p>
-                                <p class="text-[10px] text-slate-400">Hudson Yards / Edge</p>
-                            </div>
-                        </div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-full bg-slate-700 text-white font-bold text-xs flex items-center justify-center">NJ</span>
-                            <div>
-                                <p class="text-xs font-bold text-white">NJ Transit</p>
-                                <p class="text-[10px] text-slate-400">רכבת לניו ג'רזי</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 3: TICKETS & CHECKLIST -->
-        <div id="view-tickets" class="view-content hidden flex-col gap-6">
-            <div class="glass-panel rounded-2xl p-6 border border-slate-800">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-slate-800 gap-3">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white flex items-center gap-3">
-                            <i class="fa-solid fa-ticket text-amber-400"></i>
-                            מעקב הזמנת כרטיסים ואטרקציות
-                        </h2>
-                        <p class="text-xs text-slate-400 mt-1">ודאו שכל הכרטיסים הוזמנו מראש ושמורים בטלפון/מודפסים</p>
-                    </div>
-                    <button onclick="resetTicketChecklist()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">
-                        איפוס מעקב
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" id="ticketsChecklistContainer">
-                    <!-- Ticket Items dynamic -->
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 4: SHABBAT GUIDE -->
-        <div id="view-shabbat" class="view-content hidden flex-col gap-6">
-            <div class="glass-panel rounded-2xl p-6 border border-slate-800">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-star-of-david"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-white">מדריך לשבת כהלכתה בניו יורק</h2>
-                        <p class="text-xs text-amber-400/90 font-medium">פרשת כי תצא / שבת 28.08 - 29.08.2026</p>
-                    </div>
-                </div>
-
-                <!-- Shabbat Countdown & Candle Lighting -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-                    <div class="glass-card p-4 rounded-xl border border-amber-500/30 flex flex-col justify-between">
-                        <span class="text-xs text-amber-400">כניסת שבת (Candle Lighting)</span>
-                        <div class="text-3xl font-extrabold text-amber-300 my-2">19:25</div>
-                        <span class="text-[11px] text-slate-400">יום שישי, 28 באוגוסט 2026</span>
-                    </div>
-
-                    <div class="glass-card p-4 rounded-xl border border-slate-700 flex flex-col justify-between">
-                        <span class="text-xs text-slate-400">יציאת שבת</span>
-                        <div class="text-3xl font-extrabold text-slate-200 my-2">20:25</div>
-                        <span class="text-[11px] text-slate-400">יום שבת, 29 באוגוסט 2026</span>
-                    </div>
-
-                    <div class="glass-card p-4 rounded-xl border border-blue-500/30 flex flex-col justify-between">
-                        <span class="text-xs text-blue-400">גן החיות בסנטרל פארק</span>
-                        <div class="text-lg font-bold text-white my-1">כרטיסים מודפסים מראש!</div>
-                        <span class="text-[11px] text-slate-400">ללא שימוש בטלפון בשבת</span>
-                    </div>
-                </div>
-
-                <!-- Shabbat Rules & Instructions -->
-                <div class="space-y-4 text-xs text-slate-300">
-                    <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                        <h3 class="text-sm font-bold text-amber-300 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-walking"></i> מסלול רגלי בשבת לסנטרל פארק
-                        </h3>
-                        <p class="leading-relaxed">
-                            המסלול מתוכנן להליכה רגלית בלבד מהמלון במידטאון לכיוון השדרה החמישית (5th Ave) ועד לכניסה הדרום-מזרחית של סנטרל פארק (רחוב 64). זמן הליכה ממוצע: כ-15-20 דקות.
+                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                            Broadway's legendary honky-tonks, Southern hot chicken, live bluegrass, Marathon Village vintage shopping, and 12 South boutiques.
                         </p>
+
+                        <!-- Highlights Tags -->
+                        <div class="flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-music text-amber-400 mr-1"></i>Broadway
+                            </span>
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-utensils text-orange-400 mr-1"></i>Hot Chicken
+                            </span>
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-bag-shopping text-emerald-400 mr-1"></i>12 South
+                            </span>
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-map-location-dot text-indigo-400 mr-1"></i>2-Day Route
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
-                        <h3 class="text-sm font-bold text-emerald-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-utensils"></i> הצטיידות במזון כשר לשבת
-                        </h3>
-                        <p class="leading-relaxed">
-                            ביום שישי בצהריים מומלץ לרכוש אוכל מוכן מראש במעדניות/מסעדות כשרות במידטאון מנהטן לפני החזרה למלון והתארגנות לשבת.
-                        </p>
+                    <!-- Action Link to Folder -->
+                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
+                        <div class="text-[11px] text-slate-400">
+                            <i class="fa-regular fa-file-lines text-slate-500 mr-1"></i>index.html
+                        </div>
+                        <a 
+                            href="nashville2026/index.html" 
+                            class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold text-xs py-2.5 px-5 rounded-xl shadow-lg shadow-orange-500/20 transition-all duration-200 group-hover:scale-[1.02]">
+                            <span>Open Nashville Guide</span>
+                            <i class="fa-solid fa-arrow-right text-[11px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
                     </div>
                 </div>
             </div>
+
+            <!-- Card 2: New York 2026 -->
+            <div class="trip-card group bg-slate-900/70 border border-slate-800/90 rounded-3xl overflow-hidden flex flex-col backdrop-blur-sm relative" data-title="new york" data-region="east" data-tags="nyc new york broadway central park manhattan brooklyn dining shopping soho">
+                
+                <!-- Destination Image / Header -->
+                <div class="relative h-60 w-full overflow-hidden bg-slate-800">
+                    <img 
+                        src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80" 
+                        alt="New York City" 
+                        class="trip-image-zoom w-full h-full object-cover">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    
+                    <!-- State / Type Badge -->
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="bg-cyan-500/90 backdrop-blur-md text-slate-950 text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                            New York
+                        </span>
+                        <span class="bg-black/50 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/10">
+                            2026 Trip
+                        </span>
+                    </div>
+
+                    <!-- Path indicator pill -->
+                    <div class="absolute top-4 right-4 bg-slate-900/90 border border-slate-700/70 text-slate-300 text-[10px] font-mono px-2 py-1 rounded-lg backdrop-blur">
+                        <i class="fa-regular fa-folder-open text-cyan-400 mr-1"></i>/newyork2026
+                    </div>
+
+                    <!-- Title overlaid -->
+                    <div class="absolute bottom-4 left-5 right-5">
+                        <span class="text-cyan-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                            <i class="fa-solid fa-city"></i> The Big Apple
+                        </span>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">New York City</h3>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-6">
+                    <div>
+                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                            Skyline views, Broadway shows, world-class culinary experiences, SoHo fashion avenues, iconic museums, and Brooklyn strolls.
+                        </p>
+
+                        <!-- Highlights Tags -->
+                        <div class="flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-masks-theater text-cyan-400 mr-1"></i>Broadway
+                            </span>
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-tree text-emerald-400 mr-1"></i>Central Park
+                            </span>
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-utensils text-rose-400 mr-1"></i>Fine Dining
+                            </span>
+                            <span class="bg-slate-800 text-slate-300 border border-slate-700/60 px-2.5 py-1 rounded-lg">
+                                <i class="fa-solid fa-bag-shopping text-purple-400 mr-1"></i>SoHo
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Action Link to Folder -->
+                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
+                        <div class="text-[11px] text-slate-400">
+                            <i class="fa-regular fa-file-lines text-slate-500 mr-1"></i>index.html
+                        </div>
+                        <a 
+                            href="newyork2026/index.html" 
+                            class="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold text-xs py-2.5 px-5 rounded-xl shadow-lg shadow-cyan-500/20 transition-all duration-200 group-hover:scale-[1.02]">
+                            <span>Open New York Guide</span>
+                            <i class="fa-solid fa-arrow-right text-[11px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Modular "Add Next Destination" Card -->
+            <div class="border-2 border-dashed border-slate-800 hover:border-slate-700/80 rounded-3xl p-8 flex flex-col items-center justify-center text-center bg-slate-900/30 transition group cursor-pointer" onclick="toggleAddModal()">
+                <div class="w-14 h-14 rounded-2xl bg-slate-800 text-slate-400 group-hover:text-orange-400 group-hover:bg-slate-750 flex items-center justify-center mb-4 transition">
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </div>
+                <h4 class="text-base font-bold text-white mb-1">Next Destination</h4>
+                <p class="text-xs text-slate-400 max-w-xs mb-4">
+                    Planning another trip? Simply add a new folder with an <code class="text-orange-400 bg-slate-800 px-1 py-0.5 rounded">index.html</code> file.
+                </p>
+                <span class="text-xs font-semibold text-orange-400/90 group-hover:underline flex items-center gap-1">
+                    View Folder Setup Instructions <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </span>
+            </div>
+
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="noResults" class="hidden text-center py-16">
+            <div class="w-14 h-14 rounded-full bg-slate-800 text-slate-500 mx-auto flex items-center justify-center mb-3">
+                <i class="fa-solid fa-location-slash text-xl"></i>
+            </div>
+            <h4 class="text-white font-semibold text-sm">No destinations found</h4>
+            <p class="text-slate-500 text-xs mt-1">Try clearing your search query or switching filters.</p>
         </div>
 
     </main>
 
-    <!-- Mobile Bottom Navigation Bar -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-slate-800 p-2 z-50 flex justify-around items-center text-[10px]">
-        <button onclick="switchMainTab('itinerary')" class="flex flex-col items-center gap-1 text-blue-400">
-            <i class="fa-solid fa-calendar-days text-base"></i>
-            <span>מסלול</span>
-        </button>
-        <button onclick="switchMainTab('transit')" class="flex flex-col items-center gap-1 text-slate-400">
-            <i class="fa-solid fa-train-subway text-base"></i>
-            <span>תחבורה</span>
-        </button>
-        <button onclick="switchMainTab('tickets')" class="flex flex-col items-center gap-1 text-slate-400">
-            <i class="fa-solid fa-ticket text-base"></i>
-            <span>כרטיסים</span>
-        </button>
-        <button onclick="switchMainTab('shabbat')" class="flex flex-col items-center gap-1 text-slate-400">
-            <i class="fa-solid fa-star-of-david text-base"></i>
-            <span>שבת</span>
-        </button>
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-slate-800/80 bg-slate-950/80 backdrop-blur-md py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© 2026 Travel Portal • Personal Expeditions</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-folder text-orange-400"></i> Root Hub</span>
+                <span>•</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-route text-cyan-400"></i> Interactive Maps</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Info / Setup Modal -->
+    <div id="infoModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2 text-white font-bold text-base">
+                    <i class="fa-solid fa-folder-tree text-orange-500"></i>
+                    <span>Folder Architecture</span>
+                </div>
+                <button onclick="toggleInfoModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="text-xs text-slate-300 space-y-3 leading-relaxed">
+                <p>This landing page connects directly to your nested trip directories on your web server:</p>
+                
+                <div class="bg-slate-950 p-3 rounded-xl font-mono text-[11px] text-slate-300 border border-slate-800/80 space-y-1">
+                    <div class="text-amber-400">📁 / (Root)</div>
+                    <div class="pl-4">├── 📄 index.html <span class="text-slate-500">(This landing portal)</span></div>
+                    <div class="pl-4 text-orange-400">├── 📁 nashville2026/</div>
+                    <div class="pl-8">└── 📄 index.html <span class="text-slate-500">(Nashville guide)</span></div>
+                    <div class="pl-4 text-cyan-400">├── 📁 newyork2026/</div>
+                    <div class="pl-8">└── 📄 index.html <span class="text-slate-500">(New York guide)</span></div>
+                </div>
+
+                <p class="text-slate-400">
+                    Clicking each card navigates directly to that folder's designated <code class="text-white">index.html</code>.
+                </p>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="toggleInfoModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold py-2.5 rounded-xl transition">
+                    Got it
+                </button>
+            </div>
+        </div>
     </div>
 
+    <!-- JavaScript for Filtering & Interactions -->
     <script>
-        // Data Structure for NYC Itinerary starting every morning from The Pearl Hotel (233 W 49th St)
-        const itineraryData = {
-            1: {
-                dayName: "יום שלישי",
-                date: "25.08.2026",
-                focus: "SUMMIT One Vanderbilt, בראיינט פארק, דרום מנהטן ושיט שקיעה",
-                title: "מסלול יום שלישי: SUMMIT, דרום מנהטן ושיט שקיעה",
-                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/SUMMIT+One+Vanderbilt,+45+E+42nd+St,+New+York,+NY+10017/Grand+Central+Terminal,+New+York,+NY/Whole+Foods+Market,+1095+Avenue+of+the+Americas,+New+York,+NY+10036/The+Oculus,+180+Greenwich+St,+New+York,+NY+10007/Pier+16,+89+South+St,+New+York,+NY+10038",
-                flow: ["The Pearl Hotel", "SUMMIT One Vanderbilt", "גרנד סנטרל", "Whole Foods / Bryant Park", "Ground Zero & Oculus", "שיט שקיעה"],
-                items: [
-                    {
-                        id: "d1_1",
-                        time: "09:00",
-                        title: "יציאה מ-The Pearl Hotel -> תצפית SUMMIT One Vanderbilt",
-                        address: "45 E 42nd St, New York, NY 10017",
-                        googleMapUrl: "https://maps.google.com/?q=45+E+42nd+St,+New+York,+NY+10017",
-                        category: "views",
-                        tags: ["תצפית", "אינטראקטיבי", "אורות"],
-                        duration: "כ-2 שעות",
-                        subway: "יציאה מ-The Pearl Hotel (233 W 49th St): הליכה מזרחה של כ-12-15 דקות על רחוב 49/42, או סאבוויי N/R/W מתחנת 49St ל-Times Sq ועבר לקו 7/S לגרנד סנטרל",
-                        details: "התחלת הבוקר מפתח המלון. חוויית תצפית חושית ואינטראקטיבית מרהיבה עם מראות, בלונים שקופים ונוף 360 מעלות על מנהטן.",
-                    },
-                    {
-                        id: "d1_2",
-                        time: "11:30",
-                        title: "סיור ב-Grand Central & ארוחה ב-Whole Foods Market (בראיינט פארק)",
-                        address: "1095 Avenue of the Americas, New York, NY 10036",
-                        googleMapUrl: "https://maps.google.com/?q=Whole+Foods+Market+1095+Avenue+of+the+Americas+New+York",
-                        category: "food",
-                        tags: ["אוכל", "גרנד סנטרל", "פארק"],
-                        duration: "כ-1.5 שעות",
-                        subway: "הליכה רגלית קצרה מ-SUMMIT לתוך תחנת גרנד סנטרל ההיסטורית, ומשם 5 דקות הליכה מערבה ל-Whole Foods מול Bryant Park",
-                        details: "התרשמות מהארכיטקטורה והתקרה הזודיאקלית של תחנת גרנד סנטרל, ואז ארוחת צהריים נעימה ומגוונת בבופה בקומה השנייה של Whole Foods המשקיף ישירות על פארק בראיינט.",
-                    },
-                    {
-                        id: "d1_3",
-                        time: "14:30",
-                        title: "Ground Zero & The Oculus",
-                        address: "180 Greenwich St, New York, NY 10007",
-                        googleMapUrl: "https://maps.google.com/?q=180+Greenwich+St,+New+York,+NY+10007",
-                        category: "sightseeing",
-                        tags: ["אנדרטה", "דרום מנהטן", "ארכיטקטורה"],
-                        duration: "כ-1.5 עד 2 שעות",
-                        subway: "מבראיינט פארק / 42st עולים על קו 1 (אדום) או B/D/F/M דרומה ויורדים ב-WTC Cortlandt / World Trade Center",
-                        details: "סיור ברחבת אנדרטת ה-11 בספטמבר (בריכות הזיכרון), מתחם ה-Oculus המרהיב ותצפית מלמטה על ה-One World Trade Center.",
-                    },
-                    {
-                        id: "d1_4",
-                        time: "18:00 / 18:30",
-                        title: "שיט שקיעה (Statue at Sunset Cruise)",
-                        address: "Pier 16 (89 South St) או Battery Park",
-                        googleMapUrl: "https://maps.google.com/?q=89+South+St,+New+York,+NY+10038",
-                        category: "cruise",
-                        tags: ["שיט", "פסל החירות", "שקיעה"],
-                        duration: "כ-1.5 שעות",
-                        subway: "חזרה ל-The Pearl Hotel: קו 1 מתחנת South Ferry ישירות לתחנת 50 St (ירידה 2 דקות מפתח המלון!)",
-                        details: "הליכה קצרה מ-Ground Zero לרציפים. השיט מאפשר לראות את קו הרקיע של מנהטן ואת פסל החירות באור השקיעה היפהפה.",
-                    }
-                ]
-            },
-            2: {
-                dayName: "יום רביעי",
-                date: "26.08.2026",
-                focus: "שופינג בסוהו והופעה של ברונו מארס",
-                title: "מסלול יום רביעי: שופינג והופעת ענק",
-                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Broadway+%26+Spring+St,+New+York,+NY+10012/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Penn+Station,+New+York,+NY/MetLife+Stadium,+East+Rutherford,+NJ",
-                flow: ["The Pearl Hotel", "שופינג סוהו", "חזרה למלון למנוחה", "הליכה ל-Penn Station", "MetLife Stadium (Bruno Mars)"],
-                items: [
-                    {
-                        id: "d2_1",
-                        time: "10:00 - 13:30",
-                        title: "יציאה מ-The Pearl Hotel -> שופינג בסוהו (SoHo)",
-                        address: "Broadway & Spring St, New York, NY 10012",
-                        googleMapUrl: "https://maps.google.com/?q=Broadway+and+Spring+St,+New+York,+NY+10012",
-                        category: "shopping",
-                        tags: ["שופינג", "נוער", "סוהו"],
-                        duration: "כ-3.5 שעות",
-                        subway: "הליכה 1-2 דקות מ-The Pearl Hotel לתחנת 49 St (שדרה 7) -> קו N/R/W דרומה לתחנת Prince St (12 דקות נסיעה)",
-                        details: "האזור האהוב על בני נוער לקניות. ציר הליכה על ברודוויי (Nike, Glossier, Apple, Zara, Uniqlo) ורחובות צדדיים יפים (Prince, Spring, Greene). אוכל מומלץ: Prince Street Pizza או Balthazar Bakery.",
-                    },
-                    {
-                        id: "d2_2",
-                        time: "14:00 - 16:00",
-                        title: "חזרה ל-The Pearl Hotel למנוחה",
-                        address: "233 W 49th St, New York, NY 10019",
-                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
-                        category: "rest",
-                        tags: ["מנוחה", "מלון"],
-                        duration: "2 שעות",
-                        subway: "חזרה בסאבוויי קווים N / Q / R / W מתחנת Prince St לתחנת 49 St / 7th Ave (2 דק' מפתח המלון)",
-                        details: "מנוחה בחדר במלון The Pearl ואגירת כוחות לקראת ערב עוצמתי באצטדיון.",
-                    },
-                    {
-                        id: "d2_3",
-                        time: "16:30",
-                        title: "יציאה מהמלון ל-Penn Station ורכבת לאצטדיון",
-                        address: "Penn Station - 31st St & 8th Ave, New York, NY",
-                        googleMapUrl: "https://maps.google.com/?q=Penn+Station,+New+York,+NY",
-                        category: "transit",
-                        tags: ["רכבת", "תחבורה"],
-                        duration: "כ-12-15 דקות הליכה / 1 תחנה בסאבוויי קו 1 או A/C/E",
-                        subway: "הליכה דרומה על השדרה ה-8 מ-49st ל-31st St ישירות ל-Penn Station (או סאבוויי E/A/C מ-50st ל-34st)",
-                        details: "יציאה מ-The Pearl Hotel אל Penn Station. עולים על רכבת NJ Transit לתחנת Secaucus Junction, וממשם עוברים לרכבת המיוחדת לאצטדיון (Meadowlands Station). חשוב: לקנות כרטיסים מראש!",
-                    },
-                    {
-                        id: "d2_4",
-                        time: "19:00",
-                        title: "הופעה של ברונו מארס (Bruno Mars)",
-                        address: "1 MetLife Stadium Rd, East Rutherford, NJ 07073",
-                        googleMapUrl: "https://maps.google.com/?q=MetLife+Stadium,+East+Rutherford,+NJ",
-                        category: "concert",
-                        tags: ["הופעה", "מוזיקה", "שיא"],
-                        duration: "ערב שלם",
-                        subway: "חזרה ברכבות המקשרות בסיום ההופעה ל-Penn Station והליכה/מונית צפונה ל-The Pearl Hotel",
-                        details: "מופע ענק באצטדיון מטלייף. הגעה מוקדמת מאפשרת כניסה רגועה, קניית מרצ'נדייז ואוכל.",
-                    }
-                ]
-            },
-            3: {
-                dayName: "יום חמישי",
-                date: "27.08.2026",
-                focus: "טיימס סקוור, 34st, הארי פוטר, צ'לסי מרקט, ה-High Line ותצפית Edge",
-                title: "מסלול יום חמישי: חנויות נושא, רחוב 34, הליכה קולינרית ושיא הגובה",
-                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Times+Square,+New+York,+NY/Empire+State+Building,+New+York,+NY/Harry+Potter+New+York,+935+Broadway,+New+York,+NY+10010/Chelsea+Market,+75+9th+Ave,+New+York,+NY+10011/Edge,+30+Hudson+Yards,+New+York,+NY+10001",
-                flow: ["The Pearl Hotel", "טיימס סקוור (M&M, Hershey's)", "רחוב 34 & האמפייר סטייט", "Harry Potter NYC", "Chelsea Market", "High Line Park", "The Edge"],
-                items: [
-                    {
-                        id: "d3_1",
-                        time: "09:30",
-                        title: "יציאה מ-The Pearl Hotel -> טיימס סקוור (M&M, Hershey's) והליכה לרחוב 34",
-                        address: "Times Square & 34th St Herald Sq, New York, NY",
-                        googleMapUrl: "https://maps.google.com/?q=Times+Square+New+York",
-                        category: "shopping",
-                        tags: ["טיימס סקוור", "שוקולד", "אמפייר סטייט"],
-                        duration: "כ-2 שעות",
-                        subway: "הליכה רגלית של 3-5 דקות מ-The Pearl Hotel ישירות ללב טיימס סקוור, ומשם הליכה חווייתית דרומה על ברודוויי עד רחוב 34 (Herald Sq)",
-                        details: "הליכה מהמלון אל חנויות הנושא הענקיות של M&M's ו-Hershey's בטיימס סקוור. ממשיכים בהליכה ברחובות הכיפיים של ניו יורק לכיוון רחוב 34 לצפייה מקרוב בבניין האמפייר סטייט האייקוני ושדכן הקניות של Herald Square.",
-                    },
-                    {
-                        id: "d3_2",
-                        time: "12:00",
-                        title: "חנות הארי פוטר (Harry Potter NYC)",
-                        address: "935 Broadway, New York, NY 10010",
-                        googleMapUrl: "https://maps.google.com/?q=935+Broadway,+New+York,+NY+10010",
-                        category: "shopping",
-                        tags: ["הארי פוטר", "חוויה", "פלאטאיירון"],
-                        duration: "כ-1 שעה",
-                        subway: "מרחוב 34 (Herald Sq) הליכה רגלית של 10 דקות דרומה על ברודוויי עד רחוב 23 (בניין הפלאטאיירון)",
-                        details: "חנות קונספט ענקית ומדהימה לחובבי הארי פוטר ליד בניין הפלאטאיירון, כולל אביזרים, גלידות בטרבירה וחוויות אינטראקטיביות.",
-                    },
-                    {
-                        id: "d3_3",
-                        time: "13:30",
-                        title: "שוק האוכל Chelsea Market",
-                        address: "75 9th Ave, New York, NY 10011",
-                        googleMapUrl: "https://maps.google.com/?q=75+9th+Ave,+New+York,+NY+10011",
-                        category: "food",
-                        tags: ["אוכל", "שוק", "קולינריה"],
-                        duration: "כ-1.5 שעות",
-                        subway: "הליכה מערבה 15 דקות על רחוב 23, או אוטובוס רוחבי M23-SBS",
-                        details: "שוק מקורה תוסס עם מגוון עצום של דוכני אוכל, מאפים, טאקוס וקינוחים.",
-                    },
-                    {
-                        id: "d3_4",
-                        time: "15:30",
-                        title: "הליכה על פארק ה-High Line",
-                        address: "Gansevoort St & Washington St to Hudson Yards",
-                        googleMapUrl: "https://maps.google.com/?q=The+High+Line,+New+York,+NY",
-                        category: "walk",
-                        tags: ["פארק", "טיילת", "נוף"],
-                        duration: "כ-1.5 שעות",
-                        subway: "מסלול רגלי צפונה לאורך הטיילת המוגבהת לכיוון Hudson Yards",
-                        details: "הליכה קסומה של כ-2 ק\"מ על מסילת רכבת ישנה שהפכה לפארק ירוק מוגבה מעל רחובות מנהטן.",
-                    },
-                    {
-                        id: "d3_5",
-                        time: "17:30",
-                        title: "תצפית The Edge (Hudson Yards)",
-                        address: "30 Hudson Yards, New York, NY 10001",
-                        googleMapUrl: "https://maps.google.com/?q=30+Hudson+Yards,+New+York,+NY+10001",
-                        category: "views",
-                        tags: ["תצפית", "זכוכית", "גובה"],
-                        duration: "כ-1.5 שעות",
-                        subway: "חזרה ל-The Pearl Hotel: קו 7 מ-34 St Hudson Yards לטיימס סקוור (2 תחנות) והליכה 3 דק' למלון",
-                        details: "סיום ה-High Line מביא אתכם בדיוק לתצפית The Edge - מרפסת הזכוכית השקופה הבולטת ביותר במערב.",
-                    }
-                ]
-            },
-            4: {
-                dayName: "יום שישי",
-                date: "28.08.2026",
-                focus: "FAO Schwarz, המוזיאון להיסטוריה של הטבע והכנות לשבת",
-                title: "מסלול יום שישי: FAO Schwarz, מוזיאון הטבע והתארגנות לשבת",
-                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/FAO+Schwarz,+30+Rockefeller+Plaza,+New+York,+NY+10111/American+Museum+of+Natural+History,+200+Central+Park+W,+New+York,+NY+10024/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019",
-                flow: ["The Pearl Hotel", "FAO Schwarz & השדרה ה-5", "מוזיאון הטבע (12:00)", "התארגנות במלון (19:25 שבת)"],
-                items: [
-                    {
-                        id: "d4_1",
-                        time: "09:30",
-                        title: "יציאה מ-The Pearl Hotel -> FAO Schwarz והשדרה החמישית",
-                        address: "30 Rockefeller Plaza, New York, NY 10111",
-                        googleMapUrl: "https://maps.google.com/?q=30+Rockefeller+Plaza,+New+York,+NY+10111",
-                        category: "shopping",
-                        tags: ["צעצועים", "רוקפלר", "השדרה ה-5"],
-                        duration: "כ-2 שעות",
-                        subway: "הליכה רגלית קלה ונעימה של 8-10 דקות מ-The Pearl Hotel מזרחה על רחוב 49 מזרח עד רוקפלר סנטר והשדרה החמישית!",
-                        details: "חנות הצעצועים המפורסמת בעולם במתחם רוקפלר סנטר, כולל פסנתר הרצפה הענק, וסיור חנויות בשדרה החמישית האייקונית.",
-                    },
-                    {
-                        id: "d4_2",
-                        time: "12:00",
-                        title: "מוזיאון להיסטוריה של הטבע (AMNH)",
-                        address: "200 Central Park West, New York, NY 10024",
-                        googleMapUrl: "https://maps.google.com/?q=200+Central+Park+West,+New+York,+NY+10024",
-                        category: "museum",
-                        tags: ["מוזיאון", "טבע", "דינוזאורים", "ילדים"],
-                        duration: "כ-2.5 עד 3 שעות",
-                        subway: "מרוקפלר סנטר / 50st עולים על קו B (כתום) או קו C (כחול) צפונה (Uptown) ישירות לתחנת 81 St - Museum of Natural History!",
-                        details: "אחד המוזיאונים הטובים בעולם לילדים ונוער! אולמות הדינוזאורים הענקיים, לווייתן הענק, חדר האבנים היקרות והמטאוריטים וחוויית חלל מרתקת.",
-                    },
-                    {
-                        id: "d4_3",
-                        time: "15:30",
-                        title: "קניות/אוכל כשר לשבת וחזרה ל-The Pearl Hotel",
-                        address: "233 W 49th St, New York, NY 10019",
-                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
-                        category: "shabbat",
-                        tags: ["שבת", "אוכל כשר", "התארגנות"],
-                        duration: "אחה\"צ",
-                        subway: "חזרה ממוזיאון הטבע: קו C/B מתחנת 81 St דרומה ישירות לתחנת 50 St (ירידה צמוד למלון!)",
-                        details: "רכישת אוכל כשר מוכן לשבת, חזרה מוקדמת למלון The Pearl למנוחה והתארגנות נינוחה לפני כניסת השבת.",
-                    },
-                    {
-                        id: "d4_4",
-                        time: "19:25",
-                        title: "כניסת שבת במלון The Pearl Hotel",
-                        address: "233 W 49th St, New York, NY 10019",
-                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
-                        category: "shabbat",
-                        tags: ["שבת"],
-                        duration: "-",
-                        subway: "ללא תחבורה",
-                        details: "כניסת שבת (Candle Lighting) בשעה 19:25.",
-                    }
-                ]
-            },
-            5: {
-                dayName: "יום שבת",
-                date: "29.08.2026",
-                focus: "שבת רגלית בסנטרל פארק",
-                title: "מסלול יום שבת: טיול רגלי מהמלון לסנטרל פארק",
-                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019/Central+Park+Zoo,+East+64th+St,+New+York,+NY+10021/Bethesda+Terrace,+72nd+Street+Transverse,+New+York,+NY+10021/The+Mall,+Mid-Park+at+67th+Street,+New+York,+NY+10022/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019",
-                flow: ["The Pearl Hotel (הליכה 20 דק')", "גן החיות בסנטרל פארק", "The Mall & Bethesda Fountain", "Sheep Meadow (פיקניק)", "חזרה ברגל למלון"],
-                items: [
-                    {
-                        id: "d5_1",
-                        time: "10:30",
-                        title: "הליכה מהמלון -> גן החיות בסנטרל פארק (Central Park Zoo)",
-                        address: "East 64th St & 5th Ave, New York, NY 10021",
-                        googleMapUrl: "https://maps.google.com/?q=East+64th+St+and+5th+Ave,+New+York,+NY+10021",
-                        category: "zoo",
-                        tags: ["גן חיות", "משפחה", "סנטרל פארק", "שבת"],
-                        duration: "כ-20 דקות הליכה (1 מייל)",
-                        subway: "מסלול רגלי לשבת מ-The Pearl Hotel: הולכים צפונה על השדרה ה-8 מ-49st עד Columbus Circle (רחוב 59), ומשם מזרחה לאורך Central Park South עד שדרה 5 ורחוב 64. מסלול ישר, בטוח וקל!",
-                        details: "גן חיות מקסים ופסטורלי בלב הפארק. חשוב מאוד: להדפיס כרטיסים מראש מיום שישי (אין לטלטל/להציג בטלפון בשבת)!",
-                    },
-                    {
-                        id: "d5_2",
-                        time: "13:00 - 16:30",
-                        title: "טיול רגוע בלב הסנטרל פארק וחזרה למלון",
-                        address: "Bethesda Terrace, Central Park",
-                        googleMapUrl: "https://maps.google.com/?q=Bethesda+Terrace,+New+York,+NY",
-                        category: "walk",
-                        tags: ["סנטרל פארק", "מזרקה", "פיקניק"],
-                        duration: "כ-3.5 שעות",
-                        subway: "הליכה רגלית בפארק בחזרה לכיוון המלון",
-                        details: "הליכה בשביל השדרות The Mall, הגעה למזרקת בת'סדה המפורסמת (Bethesda Fountain), מנוחה ופיקניק מדשאות Sheep Meadow, וחזרה רגלית נינוחה ל-The Pearl Hotel.",
-                    }
-                ]
-            },
-            6: {
-                dayName: "יום ראשון",
-                date: "30.08.2026",
-                focus: "פרידה מניו יורק וטיסה לישראל",
-                title: "מסלול יום ראשון: אריזות ויציאה לשדה התעופה",
-                fullMapUrl: "https://www.google.com/maps/dir/The+Pearl+Hotel,+233+W+49th+St,+New+York,+NY+10019",
-                flow: ["ארוחת בוקר במלון", "אריזות & Check-out", "נסיעה מ-The Pearl לשדה התעופה"],
-                items: [
-                    {
-                        id: "d6_1",
-                        time: "בוקר",
-                        title: "ארוחת בוקר במלון, אריזות וצ'ק-אאוט",
-                        address: "The Pearl Hotel - 233 W 49th St",
-                        googleMapUrl: "https://maps.google.com/?q=233+W+49th+St,+New+York,+NY+10019",
-                        category: "hotel",
-                        tags: ["מלון", "התארגנות"],
-                        duration: "בוקר",
-                        subway: "-",
-                        details: "ארוחת בוקר אחרונה במנהטן במלון The Pearl, שמירת מזוודות בדלפק או פינוי החדר.",
-                    },
-                    {
-                        id: "d6_2",
-                        time: "צהריים",
-                        title: "נסיעה מ-The Pearl Hotel לשדה התעופה (JFK / EWR / LGA)",
-                        address: "Airport",
-                        googleMapUrl: "https://maps.google.com",
-                        category: "transit",
-                        tags: ["טיסה", "שדה תעופה"],
-                        duration: "כ-4 שעות לפני הטיסה",
-                        subway: "מונית מוזמנת מראש מפתח המלון / AirTrain",
-                        details: "מומלץ לצאת כ-4 שעות לפני מועד הטיסה הבינלאומית בשל עומסי תנועה של סוף שבוע באוגוסט מפתח המלון.",
-                    }
-                ]
-            }
-        };
+        let currentRegion = 'all';
 
-        // Ticket checklist items with state
-        const ticketChecklist = [
-            { id: "t1", name: "תצפית SUMMIT One Vanderbilt", day: "יום ג' (25.08)", required: true },
-            { id: "t2", name: "שיט שקיעה (Statue at Sunset Cruise)", day: "יום ג' (25.08)", required: true },
-            { id: "t3", name: "כרטיסים להופעה של Bruno Mars", day: "יום ד' (26.08)", required: true },
-            { id: "t4", name: "כרטיסי רכבת NJ Transit הלוך-חזור ל-MetLife", day: "יום ד' (26.08)", required: true },
-            { id: "t5", name: "חנות הארי פוטר (הזמנת תור/מקום אם נדרש)", day: "יום ה' (27.08)", required: false },
-            { id: "t6", name: "תצפית The Edge (Hudson Yards)", day: "יום ה' (27.08)", required: true },
-            { id: "t7", name: "מוזיאון הטבע AMNH (כרטיסים לשעה 12:00)", day: "יום ו' (28.08)", required: true },
-            { id: "t8", name: "גן החיות בסנטרל פארק (מודפס מראש לשבת!)", day: "יום ש' (29.08)", required: true },
-        ];
-
-        let currentDay = 1;
-        let checkedItems = JSON.parse(localStorage.getItem('nyc_checked_items') || '{}');
-        let checkedTickets = JSON.parse(localStorage.getItem('nyc_checked_tickets') || '{}');
-
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            renderDayTimeline(1);
-            renderTicketsChecklist();
-            updateGlobalProgress();
-        });
-
-        // Switch main tabs (Itinerary, Transit, Tickets, Shabbat)
-        function switchMainTab(tabName) {
-            document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.view-content').forEach(el => el.classList.remove('flex'));
+        function setFilter(region) {
+            currentRegion = region;
             
-            const selectedView = document.getElementById(`view-${tabName}`);
-            if (selectedView) {
-                selectedView.classList.remove('hidden');
-                selectedView.classList.add('flex');
-            }
-
-            // Update tab button styles
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
-                btn.classList.add('bg-slate-800', 'text-slate-300');
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-orange-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-slate-900/90', 'text-slate-400');
             });
 
-            const activeBtn = document.getElementById(`tabBtn-${tabName}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
-                activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
-            }
+            event.currentTarget.classList.add('bg-orange-600', 'text-white', 'shadow-md');
+            event.currentTarget.classList.remove('bg-slate-900/90', 'text-slate-400');
+
+            filterDestinations();
         }
 
-        // Select Itinerary Day
-        function selectDay(dayNum) {
-            currentDay = dayNum;
-            
-            // Update day pill buttons styling
-            document.querySelectorAll('.day-btn').forEach((btn, index) => {
-                const dayIndex = index + 1;
-                if (dayIndex === dayNum) {
-                    btn.className = "day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-gradient-to-br from-blue-900/60 to-slate-800 border-blue-500 shadow-lg shadow-blue-900/20";
+        function filterDestinations() {
+            const query = (document.getElementById('tripSearch').value || '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.trip-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title') || '';
+                const region = card.getAttribute('data-region') || '';
+                const tags = card.getAttribute('data-tags') || '';
+                
+                const matchesRegion = currentRegion === 'all' || region === currentRegion;
+                const matchesQuery = query === '' || title.includes(query) || tags.includes(query);
+
+                if (matchesRegion && matchesQuery) {
+                    card.style.display = 'flex';
+                    visibleCount++;
                 } else {
-                    btn.className = "day-btn text-right p-3 rounded-xl border transition flex flex-col justify-between bg-slate-900/60 border-slate-800 hover:border-slate-700";
+                    card.style.display = 'none';
                 }
             });
 
-            renderDayTimeline(dayNum);
-        }
-
-        // Render Day Timeline
-        function renderDayTimeline(dayNum) {
-            const data = itineraryData[dayNum];
-            if (!data) return;
-
-            document.getElementById('activeDayBadge').innerText = `${data.dayName} ${data.date}`;
-            document.getElementById('activeDayFocus').innerText = `דגש: ${data.focus}`;
-            document.getElementById('activeDayTitle').innerText = data.title;
-            document.getElementById('activeDayFullMap').href = data.fullMapUrl;
-
-            // Render Route Flow Pills
-            const flowContainer = document.getElementById('routeFlowDiagram');
-            flowContainer.innerHTML = data.flow.map((step, idx) => `
-                <div class="flex items-center gap-2 whitespace-nowrap">
-                    <span class="bg-blue-900/80 text-blue-300 px-2 py-1 rounded-lg border border-blue-700/50 font-medium">
-                        ${idx + 1}. ${step}
-                    </span>
-                    ${idx < data.flow.length - 1 ? '<i class="fa-solid fa-chevron-left text-slate-600 text-[10px]"></i>' : ''}
-                </div>
-            `).join('');
-
-            // Render Timeline Items
-            const container = document.getElementById('timelineContainer');
-            container.innerHTML = data.items.map(item => {
-                const isChecked = !!checkedItems[item.id];
-                return `
-                    <div class="relative flex items-start gap-4 pr-2 md:pr-0" id="card-${item.id}">
-                        <!-- Timeline Checkbox Node -->
-                        <button onclick="toggleItemCheck('${item.id}')" 
-                            class="z-10 w-9 h-9 rounded-full flex items-center justify-center transition ${isChecked ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/40' : 'bg-slate-800 border border-slate-700 text-slate-400 hover:border-blue-500'}">
-                            <i class="fa-solid ${isChecked ? 'fa-check' : 'fa-location-dot'} text-sm"></i>
-                        </button>
-
-                        <!-- Item Card content -->
-                        <div class="flex-1 glass-card rounded-2xl p-4 md:p-5 border ${isChecked ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-slate-800'} transition duration-200">
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
-                                <div class="flex items-center gap-2 flex-wrap">
-                                    <span class="text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-0.5 rounded-full">
-                                        <i class="fa-regular fa-clock ml-1"></i> ${item.time}
-                                    </span>
-                                    <span class="text-[11px] text-slate-400">
-                                        <i class="fa-regular fa-hourglass-half ml-1"></i> ${item.duration}
-                                    </span>
-                                </div>
-
-                                <a href="${item.googleMapUrl}" target="_blank" rel="noopener noreferrer" 
-                                    class="text-xs bg-slate-800 hover:bg-blue-600 hover:text-white text-blue-400 border border-slate-700 px-3 py-1 rounded-lg flex items-center gap-1.5 transition">
-                                    <i class="fa-solid fa-map-pin"></i>
-                                    <span>ניווט במפות גוגל</span>
-                                </a>
-                            </div>
-
-                            <h3 class="text-lg font-bold text-white mb-1 ${isChecked ? 'line-through text-slate-400' : ''}">
-                                ${item.title}
-                            </h3>
-
-                            <p class="text-xs text-slate-300 leading-relaxed my-2">
-                                ${item.details}
-                            </p>
-
-                            <!-- Subway info box -->
-                            <div class="mt-3 p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-center gap-2 text-xs text-slate-300">
-                                <i class="fa-solid fa-train-subway text-amber-400 text-sm"></i>
-                                <span>${item.subway}</span>
-                            </div>
-
-                            <!-- Interactive Alternatives Selector (if applicable) -->
-                            ${item.hasAlternative ? `
-                                <div class="mt-4 p-3 rounded-xl bg-indigo-950/20 border border-indigo-500/30">
-                                    <p class="text-xs font-bold text-indigo-300 mb-2 flex items-center gap-1.5">
-                                        <i class="fa-solid fa-arrows-split-up-and-left"></i>
-                                        ${item.alternativeText}
-                                    </p>
-                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                        ${item.alternatives.map((alt, idx) => `
-                                            <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px]">
-                                                <p class="font-bold text-slate-200">${alt.name}</p>
-                                                <p class="text-[10px] text-slate-400 mt-0.5">${alt.text}</p>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            ` : ''}
-
-                            <!-- Item Tags -->
-                            <div class="flex items-center gap-1.5 mt-3 flex-wrap">
-                                ${item.tags.map(tag => `
-                                    <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md border border-slate-700/50">
-                                        #${tag}
-                                    </span>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Render Tickets Checklist
-        function renderTicketsChecklist() {
-            const container = document.getElementById('ticketsChecklistContainer');
-            container.innerHTML = ticketChecklist.map(ticket => {
-                const isChecked = !!checkedTickets[ticket.id];
-                return `
-                    <div onclick="toggleTicketCheck('${ticket.id}')" 
-                        class="p-4 rounded-xl glass-card border cursor-pointer transition flex items-center justify-between ${isChecked ? 'border-emerald-500/50 bg-emerald-950/20' : 'border-slate-800 hover:border-slate-700'}">
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 rounded-md flex items-center justify-center border transition ${isChecked ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'border-slate-600 bg-slate-900'}">
-                                ${isChecked ? '<i class="fa-solid fa-check text-xs font-bold"></i>' : ''}
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-white ${isChecked ? 'line-through text-slate-400' : ''}">${ticket.name}</p>
-                                <span class="text-xs text-amber-400">${ticket.day}</span>
-                            </div>
-                        </div>
-                        <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-400">
-                            ${isChecked ? 'הוזמן ✅' : 'נדרש להזמין ⏳'}
-                        </span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Toggle Item Visit Check
-        function toggleItemCheck(id) {
-            checkedItems[id] = !checkedItems[id];
-            localStorage.setItem('nyc_checked_items', JSON.stringify(checkedItems));
-            renderDayTimeline(currentDay);
-            updateGlobalProgress();
-        }
-
-        // Toggle Ticket Check
-        function toggleTicketCheck(id) {
-            checkedTickets[id] = !checkedTickets[id];
-            localStorage.setItem('nyc_checked_tickets', JSON.stringify(checkedTickets));
-            renderTicketsChecklist();
-            updateGlobalProgress();
-        }
-
-        // Reset Ticket Checklist
-        function resetTicketChecklist() {
-            checkedTickets = {};
-            localStorage.removeItem('nyc_checked_tickets');
-            renderTicketsChecklist();
-            updateGlobalProgress();
-        }
-
-        // Update Overall Progress
-        function updateGlobalProgress() {
-            let totalItems = 0;
-            Object.values(itineraryData).forEach(day => {
-                totalItems += day.items.length;
-            });
-
-            const checkedCount = Object.values(checkedItems).filter(Boolean).length;
-            const percent = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
-
-            document.getElementById('progressPercent').innerText = `${percent}%`;
-            document.getElementById('progressBarFill').style.width = `${percent}%`;
-        }
-
-        // Global Search Filter
-        function handleSearch() {
-            const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            if (!query) {
-                renderDayTimeline(currentDay);
-                return;
-            }
-
-            // Search across all days
-            const container = document.getElementById('timelineContainer');
-            let matchedHtml = '';
-
-            Object.entries(itineraryData).forEach(([dayNum, day]) => {
-                day.items.forEach(item => {
-                    const matchText = `${item.title} ${item.details} ${item.address} ${item.tags.join(' ')}`.toLowerCase();
-                    if (matchText.includes(query)) {
-                        const isChecked = !!checkedItems[item.id];
-                        matchedHtml += `
-                            <div class="glass-card rounded-2xl p-4 border border-blue-500/40 mb-3">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-xs text-amber-400 font-bold">${day.dayName} ${day.date}</span>
-                                    <a href="${item.googleMapUrl}" target="_blank" class="text-xs text-blue-400 underline">מפות גוגל</a>
-                                </div>
-                                <h4 class="font-bold text-white">${item.title}</h4>
-                                <p class="text-xs text-slate-300 mt-1">${item.details}</p>
-                            </div>
-                        `;
-                    }
-                });
-            });
-
-            if (matchedHtml) {
-                container.innerHTML = matchedHtml;
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0 && (query !== '' || currentRegion !== 'all')) {
+                noResults.classList.remove('hidden');
             } else {
-                container.innerHTML = `
-                    <div class="p-8 text-center text-slate-400 text-sm">
-                        לא נמצאו תוצאות עבור "${query}"
-                    </div>
-                `;
+                noResults.classList.add('hidden');
             }
+        }
+
+        function toggleInfoModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleAddModal() {
+            toggleInfoModal();
         }
     </script>
 </body>
