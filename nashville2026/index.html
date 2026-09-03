@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>נאשוויל - מפה ולו"ז אינטראקטיבי ל-2 ימים</title>
     
     <!-- Tailwind CSS -->
@@ -49,7 +49,6 @@
             font-family: 'Heebo', sans-serif;
             background-color: #0f172a;
             color: #f8fafc;
-            /* Prevent bouncing elastic scroll on iOS for app-like touch */
             overscroll-behavior-y: none;
         }
         
@@ -134,11 +133,17 @@
 
         /* Smooth View Transitions */
         .view-panel {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .safe-bottom {
+                padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+            }
         }
     </style>
 </head>
-<body class="h-screen w-screen flex flex-col md:flex-row overflow-hidden bg-slate-900 text-slate-100">
+<body class="h-screen h-[100dvh] w-screen flex flex-col md:flex-row overflow-hidden bg-slate-900 text-slate-100">
 
     <!-- Mobile Top Navigation Header & Ergonomic View Switcher (Visible only on mobile/tablet < md) -->
     <header class="md:hidden bg-slate-900 border-b border-slate-800 p-3 z-30 flex flex-col gap-2 shrink-0 shadow-lg">
@@ -178,10 +183,10 @@
     </header>
 
     <!-- Sidebar / Itinerary Panel -->
-    <aside id="sidebar-panel" class="view-panel w-full md:w-[440px] lg:w-[480px] h-full flex flex-col bg-slate-900 border-b md:border-b-0 md:border-l border-slate-800 z-20 shadow-2xl shrink-0 overflow-hidden">
+    <aside id="sidebar-panel" class="view-panel w-full md:w-[440px] lg:w-[480px] flex-1 md:flex-none md:h-full min-h-0 flex flex-col bg-slate-900 border-b md:border-b-0 md:border-l border-slate-800 z-20 shadow-2xl shrink-0 overflow-hidden">
         
         <!-- App Header (Desktop View Header & Filters) -->
-        <div class="p-4 bg-slate-900 border-b border-slate-800 flex flex-col gap-3">
+        <div class="p-4 bg-slate-900 border-b border-slate-800 flex flex-col gap-3 shrink-0">
             
             <div class="hidden md:flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -246,13 +251,13 @@
             </div>
         </div>
 
-        <!-- Location List Scroll Area -->
-        <div class="flex-1 overflow-y-auto p-3.5 space-y-3.5" id="location-list">
+        <!-- Location List Scroll Area with safe bottom padding -->
+        <div class="flex-1 min-h-0 overflow-y-auto p-3.5 space-y-3.5 pb-20 md:pb-8" id="location-list">
             <!-- Dynamic Cards Injected via JS -->
         </div>
 
         <!-- Sidebar Footer Nav -->
-        <div class="p-3 bg-slate-950 border-t border-slate-800 text-xs text-slate-400 flex justify-between items-center px-4 shrink-0">
+        <div class="p-3 bg-slate-950 border-t border-slate-800 text-xs text-slate-400 flex justify-between items-center px-4 shrink-0 safe-bottom">
             <span class="text-[11px] truncate"><i class="fa-solid fa-hand-pointer text-amber-400 mr-1"></i>לחץ למיקוד במפה</span>
             <button onclick="resetMapView()" class="text-orange-400 hover:underline flex items-center gap-1 text-[11px] shrink-0">
                 <i class="fa-solid fa-compress"></i> איפוס מבט
@@ -261,7 +266,7 @@
     </aside>
 
     <!-- Main Interactive Map Area -->
-    <main id="map-panel" class="view-panel flex-1 h-full relative overflow-hidden">
+    <main id="map-panel" class="view-panel flex-1 h-full min-h-0 relative overflow-hidden">
         
         <!-- Leaflet Map Container -->
         <div id="map"></div>
@@ -354,7 +359,7 @@
             </div>
 
             <!-- Modal Action Footer -->
-            <div class="p-4 bg-slate-950 border-t border-slate-800 flex gap-3 shrink-0">
+            <div class="p-4 bg-slate-950 border-t border-slate-800 flex gap-3 shrink-0 safe-bottom">
                 <a id="modal-gmaps-link" target="_blank" href="" class="flex-1 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-semibold py-2.5 px-4 rounded-xl text-center flex items-center justify-center gap-2 transition shadow-lg shadow-orange-500/20 text-xs sm:text-sm">
                     <i class="fa-solid fa-diamond-turn-right"></i> ניווט ב-Google Maps
                 </a>
@@ -565,8 +570,20 @@
                 setMobileView('list');
             }
             
-            // Listen for resize to update leaflet size gracefully
+            // Listen for resize to update layout and leaflet size gracefully
             window.addEventListener('resize', function() {
+                const sidebar = document.getElementById('sidebar-panel');
+                const mapPanel = document.getElementById('map-panel');
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.remove('hidden');
+                    mapPanel.classList.remove('hidden');
+                    sidebar.style.height = '';
+                    mapPanel.style.height = '';
+                    sidebar.style.flex = '';
+                    mapPanel.style.flex = '';
+                } else {
+                    setMobileView(currentMobileView);
+                }
                 if (map) {
                     setTimeout(() => map.invalidateSize(), 200);
                 }
@@ -671,17 +688,25 @@
 
             if (mode === 'list') {
                 sidebar.classList.remove('hidden');
-                sidebar.style.height = '100%';
                 mapPanel.classList.add('hidden');
+                sidebar.style.height = '';
+                mapPanel.style.height = '';
+                sidebar.style.flex = '1 1 0%';
+                mapPanel.style.flex = 'none';
             } else if (mode === 'map') {
                 sidebar.classList.add('hidden');
                 mapPanel.classList.remove('hidden');
-                mapPanel.style.height = '100%';
+                sidebar.style.height = '';
+                mapPanel.style.height = '';
+                sidebar.style.flex = 'none';
+                mapPanel.style.flex = '1 1 0%';
             } else if (mode === 'split') {
                 sidebar.classList.remove('hidden');
                 mapPanel.classList.remove('hidden');
-                sidebar.style.height = '55%';
-                mapPanel.style.height = '45%';
+                sidebar.style.height = '';
+                mapPanel.style.height = '';
+                sidebar.style.flex = '1 1 50%';
+                mapPanel.style.flex = '1 1 50%';
             }
 
             // Invalidate Leaflet map size after view adjustment
